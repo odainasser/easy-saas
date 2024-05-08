@@ -1,0 +1,15 @@
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "yourUsername",
+    "password": "yourPassword",
+    "database": "yourDatabase",
+    "entities": ["dist/**/*.entity.js"],
+    "migrationsTableName": "migration",
+    "migrations": ["dist/migration/*.js"],
+    "cli": {
+      "migrationsDir": "src/migration"
+    },
+    "ssl": true
+  }
