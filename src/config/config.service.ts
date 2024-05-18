@@ -1,10 +1,12 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { config } from 'dotenv';
 
-config();  // This will load the .env file contents into process.env
+config();
 
 class ConfigService {
-  constructor(private env: { [key: string]: string | undefined } = process.env) {}
+  constructor(
+    private env: { [key: string]: string | undefined } = process.env,
+  ) {}
 
   private getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
@@ -15,7 +17,7 @@ class ConfigService {
   }
 
   public ensureValues(keys: string[]) {
-    keys.forEach(key => this.getValue(key, true));
+    keys.forEach((key) => this.getValue(key, true));
     return this;
   }
 
@@ -49,7 +51,7 @@ const configService = new ConfigService().ensureValues([
   'POSTGRES_PORT',
   'POSTGRES_USER',
   'POSTGRES_PASSWORD',
-  'POSTGRES_DATABASE'
+  'POSTGRES_DATABASE',
 ]);
 
 export { configService };
