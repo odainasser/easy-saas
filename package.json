@@ -21,8 +21,9 @@
     "typeorm": "npx typeorm",
     "migration:create": "npx typeorm migration:create",
     "migration:generate": "npx typeorm migration:generate -n",
-    "migration:run": "npm run build && npx typeorm migration:run -d ./dist/data-source.ts",
-    "migration:revert": "npx typeorm migration:revert"
+    "migration:run": "npx typeorm migration:run -d dist/data-source.js",
+    "migration:revert": "npx typeorm migration:revert -d dist/data-source.js",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.8",
