@@ -1,4 +1,4 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { DataSourceOptions } from 'typeorm';
 import { config } from 'dotenv';
 
 config();
@@ -30,7 +30,7 @@ class ConfigService {
     return mode !== 'DEV';
   }
 
-  public getTypeOrmConfig(): TypeOrmModuleOptions {
+  public getTypeOrmConfig(): DataSourceOptions {
     return {
       type: 'postgres',
       host: this.getValue('POSTGRES_HOST'),
@@ -41,7 +41,8 @@ class ConfigService {
       entities: ['dist/**/*.entity{.ts,.js}'],
       migrationsTableName: 'migration',
       migrations: ['dist/db/migrations/*.js'],
-      ssl: this.isProduction(),
+      ssl: this.isProduction() ? { rejectUnauthorized: false } : false,
+      synchronize: false,
     };
   }
 }
