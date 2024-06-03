@@ -38,7 +38,7 @@ class ConfigService {
       username: this.getValue('POSTGRES_USER'),
       password: this.getValue('POSTGRES_PASSWORD'),
       database: this.getValue('POSTGRES_DATABASE'),
-      entities: ['dist/**/*.entity{.ts,.js}'],
+      entities: ['dist/db/entities/*.entity{.ts,.js}'],
       migrationsTableName: 'migration',
       migrations: ['dist/db/migrations/*.js'],
       ssl: this.isProduction() ? { rejectUnauthorized: false } : false,
