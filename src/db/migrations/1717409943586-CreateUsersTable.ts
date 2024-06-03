@@ -5,7 +5,7 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class UsersTable1717263377501 implements MigrationInterface {
+export class CreateUsersTable1717409943586 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -49,6 +49,21 @@ export class UsersTable1717263377501 implements MigrationInterface {
             type: 'timestamp',
             default: 'now()',
           },
+          {
+            name: 'status',
+            type: 'varchar',
+            default: "'active'",
+          },
+          {
+            name: 'createdBy',
+            type: 'integer',
+            isNullable: true,
+          },
+          {
+            name: 'updatedBy',
+            type: 'integer',
+            isNullable: true,
+          },
         ],
       }),
       true,
@@ -61,6 +76,26 @@ export class UsersTable1717263377501 implements MigrationInterface {
         referencedColumnNames: ['id'],
         referencedTableName: 'roles',
         onDelete: 'CASCADE',
+      }),
+    );
+
+    await queryRunner.createForeignKey(
+      'users',
+      new TableForeignKey({
+        columnNames: ['createdBy'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'users',
+        onDelete: 'SET NULL',
+      }),
+    );
+
+    await queryRunner.createForeignKey(
+      'users',
+      new TableForeignKey({
+        columnNames: ['updatedBy'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'users',
+        onDelete: 'SET NULL',
       }),
     );
   }
