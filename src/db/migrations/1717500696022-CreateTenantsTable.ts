@@ -5,11 +5,11 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class CreateUsersTable1717409943586 implements MigrationInterface {
+export class CreateTenantsTable1717500696022 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'users',
+        name: 'tenants',
         columns: [
           {
             name: 'id',
@@ -19,35 +19,77 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'role_id',
-            type: 'integer',
-          },
-          {
             name: 'first_name',
             type: 'varchar',
+            isNullable: false,
           },
           {
             name: 'last_name',
             type: 'varchar',
+            isNullable: false,
           },
           {
             name: 'email',
             type: 'varchar',
+            isNullable: false,
             isUnique: true,
           },
           {
             name: 'password',
             type: 'varchar',
+            isNullable: false,
           },
           {
-            name: 'createdAt',
-            type: 'timestamp',
-            default: 'now()',
+            name: 'phone_number',
+            type: 'varchar',
+            isNullable: false,
           },
           {
-            name: 'updatedAt',
+            name: 'national_id',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'emergency_contact',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'last_login',
+            type: 'timestamp',
+            isNullable: true,
+          },
+          {
+            name: 'date_of_birth',
+            type: 'date',
+            isNullable: false,
+          },
+          {
+            name: 'created_at',
             type: 'timestamp',
             default: 'now()',
+            isNullable: false,
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()',
+            isNullable: false,
+          },
+          {
+            name: 'created_by',
+            type: 'integer',
+            isNullable: true,
+          },
+          {
+            name: 'updated_by',
+            type: 'integer',
+            isNullable: true,
+          },
+          {
+            name: 'passport_number',
+            type: 'varchar',
+            isNullable: false,
           },
           {
             name: 'status',
@@ -56,35 +98,15 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
             default: `'active'`,
             isNullable: false,
           },
-          {
-            name: 'createdBy',
-            type: 'integer',
-            isNullable: true,
-          },
-          {
-            name: 'updatedBy',
-            type: 'integer',
-            isNullable: true,
-          },
         ],
       }),
       true,
     );
 
     await queryRunner.createForeignKey(
-      'users',
+      'tenants',
       new TableForeignKey({
-        columnNames: ['role_id'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'roles',
-        onDelete: 'CASCADE',
-      }),
-    );
-
-    await queryRunner.createForeignKey(
-      'users',
-      new TableForeignKey({
-        columnNames: ['createdBy'],
+        columnNames: ['created_by'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
         onDelete: 'SET NULL',
@@ -92,9 +114,9 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'users',
+      'tenants',
       new TableForeignKey({
-        columnNames: ['updatedBy'],
+        columnNames: ['updated_by'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
         onDelete: 'SET NULL',
@@ -103,6 +125,6 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('users');
+    await queryRunner.dropTable('tenants');
   }
 }

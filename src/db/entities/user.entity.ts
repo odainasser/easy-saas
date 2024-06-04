@@ -16,16 +16,16 @@ export class User {
   @Column()
   role_id: number;
 
-  @Column()
+  @Column({ type: 'varchar' })
   first_name: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   last_name: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'varchar', unique: true })
   email: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   password: string;
 
   @CreateDateColumn()
@@ -34,8 +34,12 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ default: 'active' })
-  status: string;
+  @Column({
+    type: 'enum',
+    enum: ['active', 'inactive'],
+    default: 'active',
+  })
+  status: 'active' | 'inactive';
 
   @Column({ nullable: true })
   createdBy: number;
