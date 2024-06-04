@@ -109,7 +109,7 @@ export class CreateTenantsTable1717500696022 implements MigrationInterface {
         columnNames: ['created_by'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       }),
     );
 
@@ -119,7 +119,7 @@ export class CreateTenantsTable1717500696022 implements MigrationInterface {
         columnNames: ['updated_by'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       }),
     );
   }

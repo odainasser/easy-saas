@@ -77,7 +77,7 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
         columnNames: ['role_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'roles',
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
       }),
     );
 
@@ -87,7 +87,7 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
         columnNames: ['createdBy'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       }),
     );
 
@@ -97,7 +97,7 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
         columnNames: ['updatedBy'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       }),
     );
   }

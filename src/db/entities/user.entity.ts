@@ -6,7 +6,9 @@ import {
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { UserActivity } from './user-activity.entity';
 
 @Entity('users')
 export class User {
@@ -27,6 +29,9 @@ export class User {
 
   @Column({ type: 'varchar' })
   password: string;
+
+  @OneToMany(() => UserActivity, (activity) => activity.user)
+  activities: UserActivity[];
 
   @CreateDateColumn()
   createdAt: Date;
