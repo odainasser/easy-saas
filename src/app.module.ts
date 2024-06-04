@@ -10,6 +10,7 @@ import { TenantsModule } from './modules/security/tenants/tenants.module';
 import { RolesModule } from './modules/security/roles/roles.module';
 import { ActivitiesModule } from './modules/security/activities/activities.module';
 import { AttachmentsModule } from './modules/common/attachments/attachments.module';
+import { SettingsModule } from './modules/common/settings/settings.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AttachmentsModule } from './modules/common/attachments/attachments.modu
     RolesModule,
     ActivitiesModule,
     AttachmentsModule,
+    SettingsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
