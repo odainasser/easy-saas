@@ -34,9 +34,6 @@ export class Tenant {
   @Column({ type: 'varchar' })
   emergency_contact: string;
 
-  @Column({ type: 'timestamp', nullable: true })
-  last_login: Date;
-
   @Column({ type: 'date' })
   date_of_birth: Date;
 

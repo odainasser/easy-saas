@@ -55,11 +55,6 @@ export class CreateTenantsTable1717500696022 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'last_login',
-            type: 'timestamp',
-            isNullable: true,
-          },
-          {
             name: 'date_of_birth',
             type: 'date',
             isNullable: false,
