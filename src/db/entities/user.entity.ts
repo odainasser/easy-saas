@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { UserActivity } from './user-activity.entity';
+import { UserActivity } from './activity.entity';
 
 @Entity('users')
 export class User {
