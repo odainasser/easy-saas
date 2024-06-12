@@ -21,6 +21,7 @@ export class Attachment {
   @Column({
     type: 'enum',
     enum: AttachmentType,
+    nullable: true,
   })
   type: AttachmentType;
 

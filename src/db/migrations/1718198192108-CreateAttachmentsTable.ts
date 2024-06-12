@@ -29,6 +29,7 @@ export class CreateAttachmentsTable1718198192108 implements MigrationInterface {
           {
             name: 'type',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'file_name',
