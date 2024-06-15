@@ -1,102 +1,45 @@
 import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
-export class RolesTable1717263377502 implements MigrationInterface {
-  public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.createTable(
-      new Table({
-        name: 'roles',
-        columns: [
-          {
-            name: 'id',
-            type: 'integer',
-            isPrimary: true,
-            isGenerated: true,
-            generationStrategy: 'increment',
-          },
-          {
-            name: 'name',
-            type: 'varchar',
-          },
-          {
-            name: 'permissions',
-            type: 'json',
-          },
-          {
-            name: 'description',
-            type: 'varchar',
-          },
-          {
-            name: 'created_at',
-            type: 'timestamp',
-            default: 'now()',
-          },
-          {
-            name: 'updated_at',
-            type: 'timestamp',
-            default: 'now()',
-          },
-          {
-            name: 'deleted_at',
-            type: 'timestamp',
-            isNullable: true,
-          },
-          {
-            name: 'createdBy',
-            type: 'integer',
-            isNullable: true,
-          },
-          {
-            name: 'updatedBy',
-            type: 'integer',
-            isNullable: true,
-          },
-          {
-            name: 'deletedBy',
-            type: 'integer',
-            isNullable: true,
-          },
-        ],
-      }),
-      true,
-    );
+@Entity('roles')
+export class Role {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    await queryRunner.createForeignKey(
-      'roles',
-      new TableForeignKey({
-        columnNames: ['createdBy'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'roles',
-        onDelete: 'SET NULL',
-      }),
-    );
+  @Column({ type: 'varchar' })
+  name: string;
 
-    await queryRunner.createForeignKey(
-      'roles',
-      new TableForeignKey({
-        columnNames: ['updatedBy'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'roles',
-        onDelete: 'SET NULL',
-      }),
-    );
+  @Column({ type: 'json' })
+  permissions: Record<string, any>;
 
-    await queryRunner.createForeignKey(
-      'roles',
-      new TableForeignKey({
-        columnNames: ['deletedBy'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'roles',
-        onDelete: 'SET NULL',
-      }),
-    );
-  }
+  @Column({ type: 'varchar' })
+  description: string;
 
-  public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('roles');
-  }
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
+
+  @Column({ type: 'timestamp', nullable: true, name: 'deleted_at' })
+  deletedAt: Date;
+
+  @ManyToOne(() => Role, { nullable: true })
+  @JoinColumn({ name: 'createdBy' })
+  createdBy: Role;
+
+  @ManyToOne(() => Role, { nullable: true })
+  @JoinColumn({ name: 'updatedBy' })
+  updatedBy: Role;
+
+  @ManyToOne(() => Role, { nullable: true })
+  @JoinColumn({ name: 'deletedBy' })
+  deletedBy: Role;
 }
