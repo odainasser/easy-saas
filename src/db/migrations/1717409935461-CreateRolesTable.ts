@@ -21,6 +21,7 @@ export class CreateRolesTable1717409935461 implements MigrationInterface {
           {
             name: 'name',
             type: 'varchar',
+            isUnique: true,
           },
           {
             name: 'permissions',
