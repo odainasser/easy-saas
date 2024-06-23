@@ -1,18 +1,8 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { BaseEntity } from './base.entity';
 
 @Entity('roles')
-export class Role {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Role extends BaseEntity {
   @Column({ type: 'varchar', unique: true })
   name: string;
 
@@ -22,22 +12,8 @@ export class Role {
   @Column({ type: 'varchar' })
   description: string;
 
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
-
-  @Column({ type: 'timestamp', nullable: true, name: 'deleted_at' })
+  @Column({ type: 'timestamp', nullable: true })
   deletedAt: Date;
-
-  @ManyToOne(() => Role, { nullable: true })
-  @JoinColumn({ name: 'createdBy' })
-  createdBy: Role;
-
-  @ManyToOne(() => Role, { nullable: true })
-  @JoinColumn({ name: 'updatedBy' })
-  updatedBy: Role;
 
   @ManyToOne(() => Role, { nullable: true })
   @JoinColumn({ name: 'deletedBy' })

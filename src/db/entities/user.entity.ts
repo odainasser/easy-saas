@@ -1,20 +1,9 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { UserActivity } from './activity.entity';
+import { BaseEntity } from './base.entity';
 
 @Entity('users')
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class User extends BaseEntity {
   @Column()
   role_id: number;
 
@@ -32,31 +21,4 @@ export class User {
 
   @OneToMany(() => UserActivity, (activity) => activity.user)
   activities: UserActivity[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @Column({
-    type: 'enum',
-    enum: ['active', 'inactive'],
-    default: 'active',
-  })
-  status: 'active' | 'inactive';
-
-  @Column({ nullable: true })
-  createdBy: number;
-
-  @Column({ nullable: true })
-  updatedBy: number;
-
-  @ManyToOne(() => User, { nullable: true })
-  @JoinColumn({ name: 'createdBy' })
-  creator: User;
-
-  @ManyToOne(() => User, { nullable: true })
-  @JoinColumn({ name: 'updatedBy' })
-  updater: User;
 }

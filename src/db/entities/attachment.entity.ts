@@ -1,17 +1,9 @@
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { AttachmentType } from 'src/utils/enums/attachment-type.enum';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { BaseEntity } from './base.entity';
 
 @Entity('attachments')
-export class Attachment {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Attachment extends BaseEntity {
   @Column()
   relationId: number;
 
@@ -27,18 +19,6 @@ export class Attachment {
 
   @Column()
   fileName: string;
-
-  @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt: Date;
-
-  @Column({ nullable: true })
-  createdBy: number;
-
-  @Column({ nullable: true })
-  updatedBy: number;
 
   @Column({ type: 'timestamp', nullable: true })
   deletedAt: Date;

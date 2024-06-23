@@ -1,19 +1,10 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from './user.entity';
-import { ActivityType } from 'src/utils/enums/activity-type.enum';
+import { ActivityType } from '../../utils/enums/activity-type.enum';
+import { BaseEntity } from './base.entity';
 
 @Entity('user_activity')
-export class UserActivity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class UserActivity extends BaseEntity {
   @Column()
   user_id: number;
 
@@ -29,7 +20,4 @@ export class UserActivity {
 
   @Column({ type: 'json', nullable: true })
   metadata: Record<string, any>;
-
-  @CreateDateColumn()
-  timestamp: Date;
 }

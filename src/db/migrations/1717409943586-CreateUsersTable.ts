@@ -50,13 +50,6 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
             default: 'now()',
           },
           {
-            name: 'status',
-            type: 'enum',
-            enum: ['active', 'inactive'],
-            default: `'active'`,
-            isNullable: false,
-          },
-          {
             name: 'createdBy',
             type: 'integer',
             isNullable: true,

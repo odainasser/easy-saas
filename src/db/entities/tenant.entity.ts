@@ -1,18 +1,8 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { User } from './user.entity';
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from './base.entity';
 
 @Entity('tenants')
-export class Tenant {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Tenant extends BaseEntity {
   @Column({ type: 'varchar' })
   first_name: string;
 
@@ -37,25 +27,6 @@ export class Tenant {
   @Column({ type: 'date' })
   date_of_birth: Date;
 
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @ManyToOne(() => User, { nullable: true })
-  created_by: User;
-
-  @ManyToOne(() => User, { nullable: true })
-  updated_by: User;
-
   @Column({ type: 'varchar' })
   passport_number: string;
-
-  @Column({
-    type: 'enum',
-    enum: ['active', 'inactive'],
-    default: 'active',
-  })
-  status: 'active' | 'inactive';
 }
