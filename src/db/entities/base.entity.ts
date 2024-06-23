@@ -2,6 +2,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  DeleteDateColumn,
   Column,
   ManyToOne,
   JoinColumn,
@@ -18,11 +19,17 @@ export abstract class BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @DeleteDateColumn({ nullable: true })
+  deletedAt: Date;
+
   @Column({ nullable: true })
   createdBy: number;
 
   @Column({ nullable: true })
   updatedBy: number;
+
+  @Column({ nullable: true })
+  deletedBy: number;
 
   @ManyToOne(() => User, { nullable: true })
   @JoinColumn({ name: 'createdBy' })
@@ -31,4 +38,8 @@ export abstract class BaseEntity {
   @ManyToOne(() => User, { nullable: true })
   @JoinColumn({ name: 'updatedBy' })
   updater: User;
+
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: 'deletedBy' })
+  deleter: User;
 }
