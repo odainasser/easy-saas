@@ -5,11 +5,11 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class CreateUsersTable1717409943586 implements MigrationInterface {
+export class CreateTenantsTable1717500696022 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'users',
+        name: 'tenants',
         columns: [
           {
             name: 'id',
@@ -19,35 +19,57 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'roleId',
-            type: 'integer',
-          },
-          {
             name: 'firstName',
             type: 'varchar',
+            isNullable: false,
           },
           {
             name: 'lastName',
             type: 'varchar',
+            isNullable: false,
           },
           {
             name: 'email',
             type: 'varchar',
+            isNullable: false,
             isUnique: true,
           },
           {
             name: 'password',
             type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'phoneNumber',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'nationalId',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'emergencyContact',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'dateOfBirth',
+            type: 'date',
+            isNullable: false,
           },
           {
             name: 'createdAt',
             type: 'timestamp',
             default: 'now()',
+            isNullable: false,
           },
           {
             name: 'updatedAt',
             type: 'timestamp',
             default: 'now()',
+            isNullable: false,
           },
           {
             name: 'createdBy',
@@ -60,14 +82,9 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: 'deletedAt',
-            type: 'timestamp',
-            isNullable: true,
-          },
-          {
-            name: 'deletedBy',
-            type: 'integer',
-            isNullable: true,
+            name: 'passportNumber',
+            type: 'varchar',
+            isNullable: false,
           },
         ],
       }),
@@ -75,17 +92,7 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'users',
-      new TableForeignKey({
-        columnNames: ['roleId'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'roles',
-        onDelete: 'SET NULL',
-      }),
-    );
-
-    await queryRunner.createForeignKey(
-      'users',
+      'tenants',
       new TableForeignKey({
         columnNames: ['createdBy'],
         referencedColumnNames: ['id'],
@@ -95,7 +102,7 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'users',
+      'tenants',
       new TableForeignKey({
         columnNames: ['updatedBy'],
         referencedColumnNames: ['id'],
@@ -103,28 +110,9 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
         onDelete: 'CASCADE',
       }),
     );
-
-    await queryRunner.createForeignKey(
-      'users',
-      new TableForeignKey({
-        columnNames: ['deletedBy'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'users',
-        onDelete: 'SET NULL',
-      }),
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    const table = await queryRunner.getTable('users');
-    const foreignKeys = table.foreignKeys.filter(
-      (fk) =>
-        fk.columnNames.indexOf('roleId') !== -1 ||
-        fk.columnNames.indexOf('createdBy') !== -1 ||
-        fk.columnNames.indexOf('updatedBy') !== -1 ||
-        fk.columnNames.indexOf('deletedBy') !== -1,
-    );
-    await queryRunner.dropForeignKeys('users', foreignKeys);
-    await queryRunner.dropTable('users');
+    await queryRunner.dropTable('tenants');
   }
 }

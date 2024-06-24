@@ -1,53 +1,24 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
+import { UserActivity } from './activity.entity';
+import { TypeORMBaseEntity } from './base.entity';
 
 @Entity('users')
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class User extends TypeORMBaseEntity {
   @Column()
-  role_id: number;
+  roleId: number;
 
-  @Column()
-  first_name: string;
+  @Column({ type: 'varchar' })
+  firstName: string;
 
-  @Column()
-  last_name: string;
+  @Column({ type: 'varchar' })
+  lastName: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'varchar', unique: true })
   email: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   password: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @Column({ default: 'active' })
-  status: string;
-
-  @Column({ nullable: true })
-  createdBy: number;
-
-  @Column({ nullable: true })
-  updatedBy: number;
-
-  @ManyToOne(() => User, { nullable: true })
-  @JoinColumn({ name: 'createdBy' })
-  creator: User;
-
-  @ManyToOne(() => User, { nullable: true })
-  @JoinColumn({ name: 'updatedBy' })
-  updater: User;
+  @OneToMany(() => UserActivity, (activity) => activity.user)
+  activities: UserActivity[];
 }

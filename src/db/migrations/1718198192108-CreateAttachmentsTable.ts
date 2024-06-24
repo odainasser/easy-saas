@@ -5,58 +5,54 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class CreateUsersTable1717409943586 implements MigrationInterface {
+export class CreateAttachmentsTable1718198192108 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'users',
+        name: 'attachments',
         columns: [
           {
             name: 'id',
-            type: 'integer',
+            type: 'int',
             isPrimary: true,
             isGenerated: true,
             generationStrategy: 'increment',
           },
           {
-            name: 'roleId',
-            type: 'integer',
+            name: 'relationId',
+            type: 'int',
           },
           {
-            name: 'firstName',
+            name: 'relation',
             type: 'varchar',
           },
           {
-            name: 'lastName',
+            name: 'type',
             type: 'varchar',
+            isNullable: true,
           },
           {
-            name: 'email',
-            type: 'varchar',
-            isUnique: true,
-          },
-          {
-            name: 'password',
+            name: 'fileName',
             type: 'varchar',
           },
           {
             name: 'createdAt',
             type: 'timestamp',
-            default: 'now()',
+            default: 'CURRENT_TIMESTAMP',
           },
           {
             name: 'updatedAt',
             type: 'timestamp',
-            default: 'now()',
+            default: 'CURRENT_TIMESTAMP',
           },
           {
             name: 'createdBy',
-            type: 'integer',
+            type: 'int',
             isNullable: true,
           },
           {
             name: 'updatedBy',
-            type: 'integer',
+            type: 'int',
             isNullable: true,
           },
           {
@@ -66,46 +62,35 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
           },
           {
             name: 'deletedBy',
-            type: 'integer',
+            type: 'int',
             isNullable: true,
           },
         ],
       }),
-      true,
     );
 
     await queryRunner.createForeignKey(
-      'users',
+      'attachments',
       new TableForeignKey({
-        columnNames: ['roleId'],
+        columnNames: ['createdBy'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'roles',
+        referencedTableName: 'users',
         onDelete: 'SET NULL',
       }),
     );
 
     await queryRunner.createForeignKey(
-      'users',
-      new TableForeignKey({
-        columnNames: ['createdBy'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'users',
-        onDelete: 'CASCADE',
-      }),
-    );
-
-    await queryRunner.createForeignKey(
-      'users',
+      'attachments',
       new TableForeignKey({
         columnNames: ['updatedBy'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
       }),
     );
 
     await queryRunner.createForeignKey(
-      'users',
+      'attachments',
       new TableForeignKey({
         columnNames: ['deletedBy'],
         referencedColumnNames: ['id'],
@@ -116,15 +101,15 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    const table = await queryRunner.getTable('users');
+    const table = await queryRunner.getTable('attachments');
     const foreignKeys = table.foreignKeys.filter(
       (fk) =>
-        fk.columnNames.indexOf('roleId') !== -1 ||
         fk.columnNames.indexOf('createdBy') !== -1 ||
         fk.columnNames.indexOf('updatedBy') !== -1 ||
         fk.columnNames.indexOf('deletedBy') !== -1,
     );
-    await queryRunner.dropForeignKeys('users', foreignKeys);
-    await queryRunner.dropTable('users');
+    await queryRunner.dropForeignKeys('attachments', foreignKeys);
+
+    await queryRunner.dropTable('attachments');
   }
 }
