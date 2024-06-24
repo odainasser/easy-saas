@@ -6,7 +6,7 @@ import { TypeORMBaseEntity } from './base.entity';
 @Entity('user_activity')
 export class UserActivity extends TypeORMBaseEntity {
   @Column()
-  user_id: number;
+  userId: number;
 
   @ManyToOne(() => User, (user) => user.activities, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
@@ -16,7 +16,7 @@ export class UserActivity extends TypeORMBaseEntity {
     type: 'enum',
     enum: ActivityType,
   })
-  activity_type: ActivityType;
+  activityType: ActivityType;
 
   @Column({ type: 'json', nullable: true })
   metadata: Record<string, any>;

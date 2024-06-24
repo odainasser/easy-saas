@@ -11,6 +11,7 @@ import { AttachmentsModule } from './modules/attachments/attachments.module';
 import { CalendarModule } from './modules/calendar/calendar.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { SettingsModule } from './modules/property/settings/settings.module';
+import { AuthModule } from './modules/security/auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { SettingsModule } from './modules/property/settings/settings.module';
     ActivitiesModule,
     AttachmentsModule,
     SettingsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
