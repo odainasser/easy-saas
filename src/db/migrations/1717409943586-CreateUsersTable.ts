@@ -19,15 +19,15 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'role_id',
+            name: 'roleId',
             type: 'integer',
           },
           {
-            name: 'first_name',
+            name: 'firstName',
             type: 'varchar',
           },
           {
-            name: 'last_name',
+            name: 'lastName',
             type: 'varchar',
           },
           {
@@ -59,6 +59,16 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
             type: 'integer',
             isNullable: true,
           },
+          {
+            name: 'deletedAt',
+            type: 'timestamp',
+            isNullable: true,
+          },
+          {
+            name: 'deletedBy',
+            type: 'integer',
+            isNullable: true,
+          },
         ],
       }),
       true,
@@ -67,7 +77,7 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'users',
       new TableForeignKey({
-        columnNames: ['role_id'],
+        columnNames: ['roleId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'roles',
         onDelete: 'SET NULL',
@@ -93,9 +103,28 @@ export class CreateUsersTable1717409943586 implements MigrationInterface {
         onDelete: 'CASCADE',
       }),
     );
+
+    await queryRunner.createForeignKey(
+      'users',
+      new TableForeignKey({
+        columnNames: ['deletedBy'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'users',
+        onDelete: 'SET NULL',
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    const table = await queryRunner.getTable('users');
+    const foreignKeys = table.foreignKeys.filter(
+      (fk) =>
+        fk.columnNames.indexOf('roleId') !== -1 ||
+        fk.columnNames.indexOf('createdBy') !== -1 ||
+        fk.columnNames.indexOf('updatedBy') !== -1 ||
+        fk.columnNames.indexOf('deletedBy') !== -1,
+    );
+    await queryRunner.dropForeignKeys('users', foreignKeys);
     await queryRunner.dropTable('users');
   }
 }

@@ -19,12 +19,12 @@ export class CreateTenantsTable1717500696022 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'first_name',
+            name: 'firstName',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'last_name',
+            name: 'lastName',
             type: 'varchar',
             isNullable: false,
           },
@@ -40,49 +40,49 @@ export class CreateTenantsTable1717500696022 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'phone_number',
+            name: 'phoneNumber',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'national_id',
+            name: 'nationalId',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'emergency_contact',
+            name: 'emergencyContact',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'date_of_birth',
+            name: 'dateOfBirth',
             type: 'date',
             isNullable: false,
           },
           {
-            name: 'created_at',
+            name: 'createdAt',
             type: 'timestamp',
             default: 'now()',
             isNullable: false,
           },
           {
-            name: 'updated_at',
+            name: 'updatedAt',
             type: 'timestamp',
             default: 'now()',
             isNullable: false,
           },
           {
-            name: 'created_by',
+            name: 'createdBy',
             type: 'integer',
             isNullable: true,
           },
           {
-            name: 'updated_by',
+            name: 'updatedBy',
             type: 'integer',
             isNullable: true,
           },
           {
-            name: 'passport_number',
+            name: 'passportNumber',
             type: 'varchar',
             isNullable: false,
           },
@@ -94,7 +94,7 @@ export class CreateTenantsTable1717500696022 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'tenants',
       new TableForeignKey({
-        columnNames: ['created_by'],
+        columnNames: ['createdBy'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
         onDelete: 'CASCADE',
@@ -104,7 +104,7 @@ export class CreateTenantsTable1717500696022 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'tenants',
       new TableForeignKey({
-        columnNames: ['updated_by'],
+        columnNames: ['updatedBy'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
         onDelete: 'CASCADE',

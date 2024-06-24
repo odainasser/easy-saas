@@ -1,8 +1,8 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { BaseEntity } from './base.entity';
+import { TypeORMBaseEntity } from './base.entity';
 
 @Entity('roles')
-export class Role extends BaseEntity {
+export class Role extends TypeORMBaseEntity {
   @Column({ type: 'varchar', unique: true })
   name: string;
 
@@ -11,11 +11,4 @@ export class Role extends BaseEntity {
 
   @Column({ type: 'varchar' })
   description: string;
-
-  @Column({ type: 'timestamp', nullable: true })
-  deletedAt: Date;
-
-  @ManyToOne(() => Role, { nullable: true })
-  @JoinColumn({ name: 'deletedBy' })
-  deletedBy: Role;
 }

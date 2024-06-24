@@ -1,17 +1,17 @@
 import { Entity, Column, OneToMany } from 'typeorm';
 import { UserActivity } from './activity.entity';
-import { BaseEntity } from './base.entity';
+import { TypeORMBaseEntity } from './base.entity';
 
 @Entity('users')
-export class User extends BaseEntity {
+export class User extends TypeORMBaseEntity {
   @Column()
-  role_id: number;
+  roleId: number;
 
   @Column({ type: 'varchar' })
-  first_name: string;
+  firstName: string;
 
   @Column({ type: 'varchar' })
-  last_name: string;
+  lastName: string;
 
   @Column({ type: 'varchar', unique: true })
   email: string;

@@ -1,13 +1,13 @@
 import { Entity, Column } from 'typeorm';
-import { BaseEntity } from './base.entity';
+import { TypeORMBaseEntity } from './base.entity';
 
 @Entity('tenants')
-export class Tenant extends BaseEntity {
+export class Tenant extends TypeORMBaseEntity {
   @Column({ type: 'varchar' })
-  first_name: string;
+  firstName: string;
 
   @Column({ type: 'varchar' })
-  last_name: string;
+  lastName: string;
 
   @Column({ type: 'varchar', unique: true })
   email: string;
@@ -16,17 +16,17 @@ export class Tenant extends BaseEntity {
   password: string;
 
   @Column({ type: 'varchar' })
-  phone_number: string;
+  phoneNumber: string;
 
   @Column({ type: 'varchar' })
-  national_id: string;
+  nationalId: string;
 
   @Column({ type: 'varchar' })
-  emergency_contact: string;
+  emergencyContact: string;
 
   @Column({ type: 'date' })
-  date_of_birth: Date;
+  dateOfBirth: Date;
 
   @Column({ type: 'varchar' })
-  passport_number: string;
+  passportNumber: string;
 }

@@ -6,10 +6,11 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  BaseEntity,
 } from 'typeorm';
 import { User } from './user.entity';
 
-export abstract class BaseEntity {
+export abstract class TypeORMBaseEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -43,3 +44,4 @@ export abstract class BaseEntity {
   @JoinColumn({ name: 'deletedBy' })
   deleter: User;
 }
+export { BaseEntity };

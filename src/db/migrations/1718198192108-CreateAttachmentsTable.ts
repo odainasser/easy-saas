@@ -19,7 +19,7 @@ export class CreateAttachmentsTable1718198192108 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'relation_id',
+            name: 'relationId',
             type: 'int',
           },
           {
@@ -32,36 +32,36 @@ export class CreateAttachmentsTable1718198192108 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: 'file_name',
+            name: 'fileName',
             type: 'varchar',
           },
           {
-            name: 'created_at',
+            name: 'createdAt',
             type: 'timestamp',
             default: 'CURRENT_TIMESTAMP',
           },
           {
-            name: 'updated_at',
+            name: 'updatedAt',
             type: 'timestamp',
             default: 'CURRENT_TIMESTAMP',
           },
           {
-            name: 'created_by',
+            name: 'createdBy',
             type: 'int',
             isNullable: true,
           },
           {
-            name: 'updated_by',
+            name: 'updatedBy',
             type: 'int',
             isNullable: true,
           },
           {
-            name: 'deleted_at',
+            name: 'deletedAt',
             type: 'timestamp',
             isNullable: true,
           },
           {
-            name: 'deleted_by',
+            name: 'deletedBy',
             type: 'int',
             isNullable: true,
           },
@@ -72,7 +72,7 @@ export class CreateAttachmentsTable1718198192108 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'attachments',
       new TableForeignKey({
-        columnNames: ['created_by'],
+        columnNames: ['createdBy'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
         onDelete: 'SET NULL',
@@ -82,7 +82,7 @@ export class CreateAttachmentsTable1718198192108 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'attachments',
       new TableForeignKey({
-        columnNames: ['updated_by'],
+        columnNames: ['updatedBy'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
         onDelete: 'SET NULL',
@@ -92,7 +92,7 @@ export class CreateAttachmentsTable1718198192108 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'attachments',
       new TableForeignKey({
-        columnNames: ['deleted_by'],
+        columnNames: ['deletedBy'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
         onDelete: 'SET NULL',
@@ -104,9 +104,9 @@ export class CreateAttachmentsTable1718198192108 implements MigrationInterface {
     const table = await queryRunner.getTable('attachments');
     const foreignKeys = table.foreignKeys.filter(
       (fk) =>
-        fk.columnNames.indexOf('created_by') !== -1 ||
-        fk.columnNames.indexOf('updated_by') !== -1 ||
-        fk.columnNames.indexOf('deleted_by') !== -1,
+        fk.columnNames.indexOf('createdBy') !== -1 ||
+        fk.columnNames.indexOf('updatedBy') !== -1 ||
+        fk.columnNames.indexOf('deletedBy') !== -1,
     );
     await queryRunner.dropForeignKeys('attachments', foreignKeys);
 

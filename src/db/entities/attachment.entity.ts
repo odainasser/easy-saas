@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { AttachmentType } from 'src/utils/enums/attachment-type.enum';
-import { BaseEntity } from './base.entity';
+import { TypeORMBaseEntity } from './base.entity';
 
 @Entity('attachments')
-export class Attachment extends BaseEntity {
+export class Attachment extends TypeORMBaseEntity {
   @Column()
   relationId: number;
 

@@ -9,7 +9,7 @@ export class CreateActivitiesTable1717508956773 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'user_activity',
+        name: 'activities',
         columns: [
           {
             name: 'id',
@@ -19,11 +19,11 @@ export class CreateActivitiesTable1717508956773 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'user_id',
+            name: 'userId',
             type: 'int',
           },
           {
-            name: 'activity_type',
+            name: 'activityType',
             type: 'enum',
             enum: ['LOGIN', 'LOGOUT', 'CREATE', 'UPDATE', 'DELETE'],
           },
@@ -42,9 +42,9 @@ export class CreateActivitiesTable1717508956773 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'user_activity',
+      'activities',
       new TableForeignKey({
-        columnNames: ['user_id'],
+        columnNames: ['userId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
         onDelete: 'CASCADE',
@@ -53,6 +53,6 @@ export class CreateActivitiesTable1717508956773 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user_activity');
+    await queryRunner.dropTable('activities');
   }
 }

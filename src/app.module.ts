@@ -10,7 +10,7 @@ import { UsersModule } from './modules/security/users/users.module';
 import { AttachmentsModule } from './modules/attachments/attachments.module';
 import { CalendarModule } from './modules/calendar/calendar.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
-import { SettingsModule } from './modules/settings/settings.module';
+import { SettingsModule } from './modules/property/settings/settings.module';
 
 @Module({
   imports: [
