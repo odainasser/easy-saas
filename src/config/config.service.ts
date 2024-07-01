@@ -1,5 +1,6 @@
 import { DataSourceOptions } from 'typeorm';
 import { config } from 'dotenv';
+import { join } from 'path';
 
 config();
 
@@ -38,9 +39,9 @@ class ConfigService {
       username: this.getValue('POSTGRES_USER'),
       password: this.getValue('POSTGRES_PASSWORD'),
       database: this.getValue('POSTGRES_DATABASE'),
-      entities: ['dist/db/entities/*.entity{.ts,.js}'],
+      entities: [join(__dirname, '**', '*.entity.{ts,js}')],
       migrationsTableName: 'migration',
-      migrations: ['dist/db/migrations/*.js'],
+      migrations: [join(__dirname, '..', 'migrations', '*.{ts,js}')],
       ssl: this.isProduction() ? { rejectUnauthorized: false } : false,
       synchronize: false,
     };
