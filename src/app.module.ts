@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './config/config.service';
-import { TenantsModule } from './modules/security/tenants/tenants.module';
 import { RolesModule } from './modules/security/roles/roles.module';
 import { ActivitiesModule } from './modules/security/activities/activities.module';
 import { UsersModule } from './modules/security/users/users.module';
@@ -19,7 +18,6 @@ import { AuthModule } from './modules/security/auth/auth.module';
     UsersModule,
     CalendarModule,
     NotificationsModule,
-    TenantsModule,
     RolesModule,
     ActivitiesModule,
     AttachmentsModule,

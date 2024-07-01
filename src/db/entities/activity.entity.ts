@@ -4,7 +4,7 @@ import { TypeORMBaseEntity } from '../entities/base.entity';
 import { ActivityType } from '../../utils/enums/activity-type.enum';
 
 @Entity('user_activity')
-export class UserActivity extends TypeORMBaseEntity {
+export class Activity extends TypeORMBaseEntity {
   @Column()
   userId: number;
 

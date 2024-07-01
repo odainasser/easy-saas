@@ -1,5 +1,5 @@
 import { Entity, Column, OneToMany } from 'typeorm';
-import { UserActivity } from './activity.entity';
+import { Activity } from './activity.entity';
 import { TypeORMBaseEntity } from './base.entity';
 
 @Entity('users')
@@ -19,6 +19,6 @@ export class User extends TypeORMBaseEntity {
   @Column({ type: 'varchar' })
   password: string;
 
-  @OneToMany(() => UserActivity, (activity) => activity.user)
-  activities: UserActivity[];
+  @OneToMany(() => Activity, (activity) => activity.user)
+  activities: Activity[];
 }
