@@ -2,15 +2,29 @@ import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from './user.entity';
 import { TypeORMBaseEntity } from '../entities/base.entity';
 import { ActivityType } from '../../utils/enums/activity-type.enum';
+import { Tenant } from './tenant.entity';
 
 @Entity('user_activity')
 export class Activity extends TypeORMBaseEntity {
-  @Column()
+  @Column({ nullable: true })
   userId: number;
 
-  @ManyToOne(() => User, (user) => user.activities, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.activities, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
   @JoinColumn({ name: 'userId' })
   user: User;
+
+  @Column({ nullable: true })
+  tenantId: number;
+
+  @ManyToOne(() => Tenant, (tenant) => tenant.activities, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  @JoinColumn({ name: 'tenantId' })
+  tenant: Tenant;
 
   @Column({
     type: 'enum',

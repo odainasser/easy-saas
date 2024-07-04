@@ -21,6 +21,12 @@ export class CreateActivitiesTable1717508956773 implements MigrationInterface {
           {
             name: 'userId',
             type: 'int',
+            isNullable: true,
+          },
+          {
+            name: 'tenantId',
+            type: 'int',
+            isNullable: true,
           },
           {
             name: 'activityType',
@@ -47,6 +53,16 @@ export class CreateActivitiesTable1717508956773 implements MigrationInterface {
         columnNames: ['userId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
+        onDelete: 'CASCADE',
+      }),
+    );
+
+    await queryRunner.createForeignKey(
+      'activities',
+      new TableForeignKey({
+        columnNames: ['tenantId'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'tenants',
         onDelete: 'CASCADE',
       }),
     );

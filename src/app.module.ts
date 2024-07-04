@@ -27,7 +27,7 @@ import { AuthModule } from './modules/security/auth/auth.module';
         password: configService.get<string>('POSTGRES_PASSWORD'),
         database: configService.get<string>('POSTGRES_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true,
+        synchronize: false,
         logging: true,
       }),
       inject: [ConfigService],
