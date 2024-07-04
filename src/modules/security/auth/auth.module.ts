@@ -7,14 +7,17 @@ import { User } from '../../../db/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { TenantModule } from '../tenant/tenant.module';
+import { Tenant } from '../../../db/entities/tenant.entity';
 
 @Module({
   imports: [
     UsersModule,
-    TypeOrmModule.forFeature([User]),
+    TenantModule,
+    TypeOrmModule.forFeature([User, Tenant]),
     PassportModule,
     JwtModule.register({
-      secret: 'mnzWNzhBorUia',
+      secret: process.env.JWT_SECRET || 'mnzWNzhBorUia',
       signOptions: { expiresIn: '1h' },
     }),
   ],

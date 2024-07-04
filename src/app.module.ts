@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { CacheModule } from '@nestjs/cache-manager';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CacheModule } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
+import * as dotenv from 'dotenv';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RolesModule } from './modules/security/roles/roles.module';
@@ -13,35 +13,29 @@ import { CalendarModule } from './modules/system/calendar/calendar.module';
 import { NotificationsModule } from './modules/core/notifications/notifications.module';
 import { SettingsModule } from './modules/system/settings/settings.module';
 import { AuthModule } from './modules/security/auth/auth.module';
+import { TenantModule } from './modules/security/tenant/tenant.module';
+
+dotenv.config();
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get<string>('POSTGRES_HOST'),
-        port: configService.get<number>('POSTGRES_PORT'),
-        username: configService.get<string>('POSTGRES_USER'),
-        password: configService.get<string>('POSTGRES_PASSWORD'),
-        database: configService.get<string>('POSTGRES_DATABASE'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: false,
-        logging: true,
-      }),
-      inject: [ConfigService],
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.POSTGRES_HOST,
+      port: parseInt(process.env.POSTGRES_PORT, 10),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DATABASE,
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: false,
+      logging: true,
     }),
-    CacheModule.registerAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        store: redisStore,
-        host: configService.get<string>('REDIS_HOST'),
-        port: configService.get<number>('REDIS_PORT'),
-        auth_pass: configService.get<string>('REDIS_PASSWORD'),
-        ttl: configService.get<number>('CACHE_TTL', 3600),
-      }),
-      inject: [ConfigService],
+    CacheModule.register({
+      store: redisStore,
+      host: process.env.REDIS_HOST,
+      port: parseInt(process.env.REDIS_PORT, 10),
+      auth_pass: process.env.REDIS_PASSWORD,
+      ttl: parseInt(process.env.CACHE_TTL, 10) || 3600,
     }),
     UsersModule,
     CalendarModule,
@@ -51,6 +45,7 @@ import { AuthModule } from './modules/security/auth/auth.module';
     AttachmentsModule,
     SettingsModule,
     AuthModule,
+    TenantModule,
   ],
   controllers: [AppController],
   providers: [AppService],
