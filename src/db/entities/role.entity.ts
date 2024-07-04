@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { TypeORMBaseEntity } from './base.entity';
 
 @Entity('roles')

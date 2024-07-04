@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { AttachmentType } from 'src/utils/enums/attachment-type.enum';
+import { Entity, Column } from 'typeorm';
 import { TypeORMBaseEntity } from './base.entity';
+import { AttachmentType } from '../../utils/enums/attachment-type.enum';
 
 @Entity('attachments')
 export class Attachment extends TypeORMBaseEntity {

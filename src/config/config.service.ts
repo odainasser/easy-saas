@@ -3,10 +3,12 @@ import { config } from 'dotenv';
 
 config();
 
-class ConfigService {
-  constructor(
-    private env: { [key: string]: string | undefined } = process.env,
-  ) {}
+class CustomConfigService {
+  private env: { [key: string]: string | undefined };
+
+  constructor(env: { [key: string]: string | undefined } = process.env) {
+    this.env = env;
+  }
 
   private getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
@@ -16,16 +18,16 @@ class ConfigService {
     return value;
   }
 
-  public ensureValues(keys: string[]) {
+  public ensureValues(keys: string[]): this {
     keys.forEach((key) => this.getValue(key, true));
     return this;
   }
 
-  public getPort() {
-    return this.getValue('PORT', true);
+  public getPort(): number {
+    return parseInt(this.getValue('PORT', true), 10);
   }
 
-  public isProduction() {
+  public isProduction(): boolean {
     const mode = this.getValue('MODE', false);
     return mode !== 'DEV';
   }
@@ -45,14 +47,26 @@ class ConfigService {
       synchronize: false,
     };
   }
+
+  public getRedisConfig() {
+    return {
+      host: this.getValue('REDIS_HOST'),
+      port: parseInt(this.getValue('REDIS_PORT'), 10),
+      password: this.getValue('REDIS_PASSWORD'),
+      ttl: parseInt(this.getValue('CACHE_TTL') || '3600', 10),
+    };
+  }
 }
 
-const configService = new ConfigService().ensureValues([
+const configService = new CustomConfigService().ensureValues([
   'POSTGRES_HOST',
   'POSTGRES_PORT',
   'POSTGRES_USER',
   'POSTGRES_PASSWORD',
   'POSTGRES_DATABASE',
+  'REDIS_HOST',
+  'REDIS_PORT',
+  'REDIS_PASSWORD',
 ]);
 
-export { configService };
+export { configService, CustomConfigService };
