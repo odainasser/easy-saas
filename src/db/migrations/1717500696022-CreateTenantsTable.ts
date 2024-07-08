@@ -72,12 +72,22 @@ export class CreateTenantsTable1717500696022 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'deletedAt',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
             name: 'createdBy',
             type: 'integer',
             isNullable: true,
           },
           {
             name: 'updatedBy',
+            type: 'integer',
+            isNullable: true,
+          },
+          {
+            name: 'deletedBy',
             type: 'integer',
             isNullable: true,
           },
