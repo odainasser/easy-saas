@@ -23,7 +23,7 @@ import {
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('login')
+  @Post('user/login')
   @ApiOperation({ summary: 'User login' })
   @ApiConsumes('application/x-www-form-urlencoded')
   @ApiResponse({ status: 201, description: 'User successfully logged in' })
@@ -32,17 +32,8 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
-  @Post('tenant/login')
-  @ApiOperation({ summary: 'Tenant login' })
-  @ApiConsumes('application/x-www-form-urlencoded')
-  @ApiResponse({ status: 201, description: 'Tenant successfully logged in' })
-  @ApiResponse({ status: 401, description: 'Invalid credentials' })
-  async loginTenant(@Body() tenantLoginDto: TenantLoginDto) {
-    return this.authService.loginTenant(tenantLoginDto);
-  }
-
   @UseGuards(JwtAuthGuard)
-  @Get('profile')
+  @Get('user/profile')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get user profile' })
   @ApiResponse({
@@ -52,5 +43,14 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   getProfile(@Request() req) {
     return req.user;
+  }
+
+  @Post('tenant/login')
+  @ApiOperation({ summary: 'Tenant login' })
+  @ApiConsumes('application/x-www-form-urlencoded')
+  @ApiResponse({ status: 201, description: 'Tenant successfully logged in' })
+  @ApiResponse({ status: 401, description: 'Invalid credentials' })
+  async loginTenant(@Body() tenantLoginDto: TenantLoginDto) {
+    return this.authService.loginTenant(tenantLoginDto);
   }
 }
