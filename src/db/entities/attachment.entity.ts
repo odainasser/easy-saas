@@ -1,6 +1,7 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { TypeORMBaseEntity } from './base.entity';
 import { AttachmentType } from '../../utils/enums/attachment-type.enum';
+import { User } from './user.entity';
 
 @Entity('attachments')
 export class Attachment extends TypeORMBaseEntity {
@@ -18,11 +19,23 @@ export class Attachment extends TypeORMBaseEntity {
   type: AttachmentType;
 
   @Column()
-  fileName: string;
+  name: string;
 
   @Column({ type: 'timestamp', nullable: true })
   deletedAt: Date;
 
   @Column({ nullable: true })
   deletedBy: number;
+
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: 'createdBy' })
+  creator: User;
+
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: 'updatedBy' })
+  updater: User;
+
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: 'deletedBy' })
+  deleter: User;
 }
