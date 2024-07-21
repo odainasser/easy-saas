@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../../../db/entities/user.entity';
 import { BaseService } from '../../core/base/base.service';
+import { Role } from 'src/db/entities/role.entity';
 
 @Injectable()
 export class UsersService {
@@ -35,5 +36,13 @@ export class UsersService {
 
   async remove(id: number, userId: number): Promise<void> {
     return this.baseService.remove(id, userId);
+  }
+
+  async findUserRoleById(id: number): Promise<Role> {
+    const user = await this.userRepository.findOne({
+      where: { id, deletedAt: null },
+      relations: ['role'],
+    });
+    return user?.role;
   }
 }

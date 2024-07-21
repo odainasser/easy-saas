@@ -44,4 +44,3 @@ export abstract class TypeORMBaseEntity extends BaseEntity {
   @JoinColumn({ name: 'deletedBy' })
   deleter: User;
 }
-export { BaseEntity };

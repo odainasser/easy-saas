@@ -1,5 +1,6 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { TypeORMBaseEntity } from './base.entity';
+import { Activity } from './activity.entity';
 
 @Entity('tenants')
 export class Tenant extends TypeORMBaseEntity {
@@ -29,4 +30,7 @@ export class Tenant extends TypeORMBaseEntity {
 
   @Column({ type: 'varchar' })
   passportNumber: string;
+
+  @OneToMany(() => Activity, (activity) => activity.tenant)
+  activities: Activity[];
 }

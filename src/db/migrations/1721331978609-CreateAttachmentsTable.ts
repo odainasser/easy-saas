@@ -5,11 +5,11 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class CreateTenantsTable1717500696022 implements MigrationInterface {
+export class CreateAttachmentsTable1721331978609 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'tenants',
+        name: 'attachments',
         columns: [
           {
             name: 'id',
@@ -19,45 +19,29 @@ export class CreateTenantsTable1717500696022 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'firstName',
+            name: 'relation',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'lastName',
+            name: 'relationId',
+            type: 'integer',
+            isNullable: false,
+          },
+          {
+            name: 'type',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'email',
-            type: 'varchar',
-            isNullable: false,
-            isUnique: true,
-          },
-          {
-            name: 'password',
+            name: 'name',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'phoneNumber',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'nationalId',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'emergencyContact',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'dateOfBirth',
-            type: 'date',
-            isNullable: false,
+            name: 'isMain',
+            type: 'boolean',
+            default: false,
           },
           {
             name: 'createdAt',
@@ -74,7 +58,7 @@ export class CreateTenantsTable1717500696022 implements MigrationInterface {
           {
             name: 'deletedAt',
             type: 'timestamp',
-            default: 'now()',
+            isNullable: true,
           },
           {
             name: 'createdBy',
@@ -91,38 +75,43 @@ export class CreateTenantsTable1717500696022 implements MigrationInterface {
             type: 'integer',
             isNullable: true,
           },
-          {
-            name: 'passportNumber',
-            type: 'varchar',
-            isNullable: false,
-          },
         ],
       }),
       true,
     );
 
     await queryRunner.createForeignKey(
-      'tenants',
+      'attachments',
       new TableForeignKey({
         columnNames: ['createdBy'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
       }),
     );
 
     await queryRunner.createForeignKey(
-      'tenants',
+      'attachments',
       new TableForeignKey({
         columnNames: ['updatedBy'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
+      }),
+    );
+
+    await queryRunner.createForeignKey(
+      'attachments',
+      new TableForeignKey({
+        columnNames: ['deletedBy'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'users',
+        onDelete: 'SET NULL',
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('tenants');
+    await queryRunner.dropTable('attachments');
   }
 }
