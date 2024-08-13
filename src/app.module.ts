@@ -9,9 +9,7 @@ import { RolesModule } from './modules/security/roles/roles.module';
 import { ActivitiesModule } from './modules/security/activities/activities.module';
 import { UsersModule } from './modules/security/users/users.module';
 import { AttachmentsModule } from './modules/core/attachments/attachments.module';
-import { CalendarModule } from './modules/system/calendar/calendar.module';
 import { NotificationsModule } from './modules/core/notifications/notifications.module';
-import { SettingsModule } from './modules/system/settings/settings.module';
 import { AuthModule } from './modules/security/auth/auth.module';
 import { TenantModule } from './modules/security/tenant/tenant.module';
 
@@ -38,12 +36,10 @@ dotenv.config();
     //   ttl: parseInt(process.env.CACHE_TTL, 10) || 3600,
     // }),
     UsersModule,
-    CalendarModule,
     NotificationsModule,
     RolesModule,
     ActivitiesModule,
     AttachmentsModule,
-    SettingsModule,
     AuthModule,
     TenantModule,
   ],
