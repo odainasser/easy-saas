@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TenantService } from './tenant.service';
 import { Tenant } from '../../../db/entities/tenant.entity';
-import { BaseServiceModule } from '../../../modules/core/base/base.module';
+import { BaseServiceModule } from '../../base/base.module';
 
 @Module({
   imports: [
