@@ -6,7 +6,6 @@ import * as dotenv from 'dotenv';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RolesModule } from './modules/security/roles/roles.module';
-import { ActivitiesModule } from './modules/security/activities/activities.module';
 import { UsersModule } from './modules/security/users/users.module';
 import { AttachmentsModule } from './modules/common/attachments/attachments.module';
 import { NotificationsModule } from './modules/common/notifications/notifications.module';
@@ -38,7 +37,6 @@ dotenv.config();
     UsersModule,
     NotificationsModule,
     RolesModule,
-    ActivitiesModule,
     AttachmentsModule,
     AuthModule,
     TenantModule,

@@ -23,7 +23,7 @@
     "migration:generate": "npx typeorm migration:generate -n",
     "migration:run": "npx typeorm migration:run -d dist/data-source.js",
     "migration:revert": "npx typeorm migration:revert -d dist/data-source.js",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist tsconfig.build.tsbuildinfo"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.2.2",
