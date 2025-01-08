@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { TypeORMBaseEntity } from './base.entity';
-import { AttachmentType } from '../../utils/enums/attachment-type.enum';
+import { AttachmentType } from '../../common/enums/attachment-type.enum';
 import { User } from './user.entity';
 
 @Entity('attachments')

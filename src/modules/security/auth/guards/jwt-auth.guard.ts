@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from '../../users/users.service';
-import { UserType } from '../../../../utils/enums/user-type.enum';
+import { UserType } from '../../../../common/enums/user-type.enum';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {

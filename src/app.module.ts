@@ -7,8 +7,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RolesModule } from './modules/security/roles/roles.module';
 import { UsersModule } from './modules/security/users/users.module';
-import { AttachmentsModule } from './modules/common/attachments/attachments.module';
-import { NotificationsModule } from './modules/common/notifications/notifications.module';
 import { AuthModule } from './modules/security/auth/auth.module';
 import { TenantModule } from './modules/security/tenant/tenant.module';
 
@@ -35,9 +33,7 @@ dotenv.config();
     //   ttl: parseInt(process.env.CACHE_TTL, 10) || 3600,
     // }),
     UsersModule,
-    NotificationsModule,
     RolesModule,
-    AttachmentsModule,
     AuthModule,
     TenantModule,
   ],
