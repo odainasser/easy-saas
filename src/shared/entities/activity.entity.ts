@@ -1,7 +1,7 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from './user.entity';
 import { TypeORMBaseEntity } from '../entities/base.entity';
-import { ActivityType } from '../../utils/enums/activity-type.enum';
+import { ActivityType } from '../../common/enums/activity-type.enum';
 import { Tenant } from './tenant.entity';
 
 @Entity('user_activity')

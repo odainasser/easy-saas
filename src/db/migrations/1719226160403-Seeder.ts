@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Role } from '../entities/role.entity';
-import { User } from '../entities/user.entity';
-import { Tenant } from '../entities/tenant.entity';
+import { Role } from 'src/shared/entities/role.entity';
+import { Tenant } from 'src/shared/entities/tenant.entity';
+import { User } from 'src/shared/entities/user.entity';
 
 export class Seeder1719226160403 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

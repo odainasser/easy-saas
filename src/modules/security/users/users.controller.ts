@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { Body, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiConsumes } from '@nestjs/swagger';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
@@ -11,6 +11,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @ApiConsumes('application/x-www-form-urlencoded')
   async create(@Body() createUserDto: CreateUserDto) {
     //return this.usersService.create(createUserDto);
   }
