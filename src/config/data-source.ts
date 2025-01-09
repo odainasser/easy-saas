@@ -10,7 +10,7 @@ const AppDataSource = new DataSource({
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DATABASE,
-  entities: ['dist/db/entities/*.entity{.ts,.js}'],
+  entities: ['dist/shared/entities/*.entity{.ts,.js}'],
   migrationsTableName: 'migration',
   migrations: ['dist/db/migrations/*.js'],
   ssl: process.env.MODE !== 'DEV' ? { rejectUnauthorized: false } : false,
