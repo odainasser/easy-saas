@@ -22,7 +22,7 @@ import {
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('user/login')
+  @Post('login')
   @ApiOperation({ summary: 'User login' })
   @ApiConsumes('application/x-www-form-urlencoded')
   @ApiResponse({ status: 201, description: 'User successfully logged in' })
@@ -32,7 +32,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('user/profile')
+  @Get('profile')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get user profile' })
   @ApiResponse({

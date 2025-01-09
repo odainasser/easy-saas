@@ -7,10 +7,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('PMS API')
-    .setDescription('The PMS API description')
+    .setTitle('Cloud API')
+    .setDescription('The Property Management Cloud.')
     .setVersion('1.0')
-    .addTag('pms')
+    .addTag('cloud')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
