@@ -1,19 +1,21 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 import { Body, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags, ApiConsumes } from '@nestjs/swagger';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('users')
 @Controller('users')
+@UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
   @ApiConsumes('application/x-www-form-urlencoded')
   async create(@Body() createUserDto: CreateUserDto) {
-    //return this.usersService.create(createUserDto);
+    return this.usersService.create(createUserDto);
   }
 
   @Get()
@@ -23,16 +25,17 @@ export class UsersController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return this.usersService.findOne(Number(id));
+    //return this.usersService.findOne(Number(id));
   }
 
   @Put(':id')
+  @ApiConsumes('application/x-www-form-urlencoded')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    //return this.usersService.update(id, updateUserDto);
+    //return this.usersService.update(Number(id), updateUserDto);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string, @Body('userId') userId: number) {
-    return this.usersService.remove(Number(id), userId);
+    //return this.usersService.remove(Number(id), userId);
   }
 }

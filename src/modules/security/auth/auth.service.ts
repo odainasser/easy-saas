@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
-import { TenantService } from '../tenant/tenant.service';
 import { LoginDto } from './dtos/login.dto';
 import { TenantLoginDto } from './dtos/tenant-login.dto';
 import * as bcrypt from 'bcrypt';
@@ -10,7 +9,6 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly tenantService: TenantService,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -24,12 +22,12 @@ export class AuthService {
   }
 
   async validateTenant(email: string, password: string): Promise<any> {
-    const tenant = await this.tenantService.findOneByEmail(email);
-    if (tenant && (await bcrypt.compare(password, tenant.password))) {
-      const { password, ...result } = tenant;
-      return result;
-    }
-    return null;
+    // const tenant = await this.tenantService.findOneByEmail(email);
+    // if (tenant && (await bcrypt.compare(password, tenant.password))) {
+    //   const { password, ...result } = tenant;
+    //   return result;
+    // }
+    // return null;
   }
 
   async login(loginDto: LoginDto): Promise<any> {
