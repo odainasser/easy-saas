@@ -8,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/login.dto';
-import { TenantLoginDto } from './dtos/tenant-login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import {
   ApiTags,
@@ -43,14 +42,5 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   getProfile(@Request() req) {
     return req.user;
-  }
-
-  @Post('tenant/login')
-  @ApiOperation({ summary: 'Tenant login' })
-  @ApiConsumes('application/x-www-form-urlencoded')
-  @ApiResponse({ status: 201, description: 'Tenant successfully logged in' })
-  @ApiResponse({ status: 401, description: 'Invalid credentials' })
-  async loginTenant(@Body() tenantLoginDto: TenantLoginDto) {
-    return this.authService.loginTenant(tenantLoginDto);
   }
 }
