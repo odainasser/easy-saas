@@ -1,5 +1,5 @@
 {
-  "name": "pms-api",
+  "name": "cloud-api",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -21,8 +21,8 @@
     "typeorm": "npx typeorm",
     "migration:create": "npx typeorm migration:create",
     "migration:generate": "npx typeorm migration:generate -n",
-    "migration:run": "npx typeorm migration:run -d dist/data-source.js",
-    "migration:revert": "npx typeorm migration:revert -d dist/data-source.js",
+    "migration:run": "npx typeorm migration:run -d dist/config/data-source.js",
+    "migration:revert": "npx typeorm migration:revert -d dist/config/data-source.js",
     "clean": "rimraf dist tsconfig.build.tsbuildinfo"
   },
   "dependencies": {

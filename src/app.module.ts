@@ -5,10 +5,8 @@ import * as redisStore from 'cache-manager-redis-store';
 import * as dotenv from 'dotenv';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RolesModule } from './modules/security/roles/roles.module';
 import { UsersModule } from './modules/security/users/users.module';
 import { AuthModule } from './modules/security/auth/auth.module';
-import { TenantModule } from './modules/security/tenant/tenant.module';
 
 dotenv.config();
 
@@ -33,9 +31,7 @@ dotenv.config();
     //   ttl: parseInt(process.env.CACHE_TTL, 10) || 3600,
     // }),
     UsersModule,
-    RolesModule,
     AuthModule,
-    TenantModule,
   ],
   controllers: [AppController],
   providers: [AppService],
