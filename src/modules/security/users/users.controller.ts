@@ -25,17 +25,17 @@ export class UsersController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    //return this.usersService.findOne(Number(id));
+    return this.usersService.findOneByID(Number(id));
   }
 
   @Put(':id')
   @ApiConsumes('application/x-www-form-urlencoded')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    //return this.usersService.update(Number(id), updateUserDto);
+    return this.usersService.update(Number(id), updateUserDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string, @Body('userId') userId: number) {
-    //return this.usersService.remove(Number(id), userId);
+  async remove(@Param('id') id: string) {
+    return this.usersService.remove(Number(id));
   }
 }
