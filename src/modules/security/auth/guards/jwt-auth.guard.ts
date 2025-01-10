@@ -13,17 +13,16 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    await super.canActivate(context);
+    const canActivate = await super.canActivate(context);
 
     const request = context.switchToHttp().getRequest();
     const user = request.user;
 
-    const dbRole = await this.usersService.findOneByEmail(user.email);
+    const dbUser = await this.usersService.findOneByEmail(user.email);
 
-    if (!dbRole) {
+    if (!dbUser) {
       throw new ForbiddenException('User not found');
     }
-
-    return true;
+    return canActivate && !!dbUser;
   }
 }
