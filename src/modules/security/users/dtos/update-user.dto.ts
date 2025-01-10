@@ -3,32 +3,30 @@ import {
   IsEmail,
   IsOptional,
   IsString,
-  IsBoolean,
   IsUUID,
+  IsNotEmpty,
+  MinLength,
 } from 'class-validator';
 
 export class UpdateUserDto {
-  @ApiProperty({ description: 'Unique identifier for the user' })
-  @IsUUID()
-  readonly id: string;
-
-  @ApiPropertyOptional({ description: 'Name of the user' })
-  @IsOptional()
+  @ApiProperty({ description: 'The first name of the user', required: false })
   @IsString()
-  readonly name?: string;
-
-  @ApiPropertyOptional({ description: 'Email address of the user' })
   @IsOptional()
+  firstName?: string;
+
+  @ApiProperty({ description: 'The last name of the user', required: false })
+  @IsString()
+  @IsOptional()
+  lastName?: string;
+
+  @ApiProperty({ description: 'The email of the user' })
   @IsEmail()
-  readonly email?: string;
+  @IsNotEmpty()
+  email: string;
 
-  @ApiPropertyOptional({ description: 'Password for the user' })
-  @IsOptional()
+  @ApiProperty({ description: 'The password of the user' })
   @IsString()
-  readonly password?: string;
-
-  @ApiPropertyOptional({ description: 'Indicates if the user is active' })
-  @IsOptional()
-  @IsBoolean()
-  readonly isActive?: boolean;
+  @MinLength(6)
+  @IsNotEmpty()
+  password: string;
 }

@@ -8,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/login.dto';
-import { TenantLoginDto } from './dtos/tenant-login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import {
   ApiTags,
@@ -23,7 +22,7 @@ import {
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('user/login')
+  @Post('login')
   @ApiOperation({ summary: 'User login' })
   @ApiConsumes('application/x-www-form-urlencoded')
   @ApiResponse({ status: 201, description: 'User successfully logged in' })
@@ -33,7 +32,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('user/profile')
+  @Get('profile')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get user profile' })
   @ApiResponse({
@@ -42,15 +41,7 @@ export class AuthController {
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   getProfile(@Request() req) {
-    return req.user;
-  }
-
-  @Post('tenant/login')
-  @ApiOperation({ summary: 'Tenant login' })
-  @ApiConsumes('application/x-www-form-urlencoded')
-  @ApiResponse({ status: 201, description: 'Tenant successfully logged in' })
-  @ApiResponse({ status: 401, description: 'Invalid credentials' })
-  async loginTenant(@Body() tenantLoginDto: TenantLoginDto) {
-    return this.authService.loginTenant(tenantLoginDto);
+    const { password, ...userWithoutPassword } = req.user;
+    return userWithoutPassword;
   }
 }
