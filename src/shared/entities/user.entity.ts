@@ -22,7 +22,7 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', unique: true })
   email: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 20 })
   password: string;
 
   @CreateDateColumn()
