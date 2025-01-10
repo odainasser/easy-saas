@@ -5,10 +5,14 @@ import {
   Get,
   Request,
   UseGuards,
+  Put,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dtos/login.dto';
+import { LoginDto } from '../../../shared/dtos/login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { UpdateUserDto } from '../../../shared/dtos/update-user.dto';
+import { UpdateUserPasswordDto } from '../../../shared/dtos/update-user-password.dto';
+
 import {
   ApiTags,
   ApiOperation,
@@ -16,11 +20,15 @@ import {
   ApiBearerAuth,
   ApiConsumes,
 } from '@nestjs/swagger';
+import { UsersService } from '../users/users.service';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Post('login')
   @ApiOperation({ summary: 'User login' })
@@ -43,5 +51,47 @@ export class AuthController {
   getProfile(@Request() req) {
     const { password, ...userWithoutPassword } = req.user;
     return userWithoutPassword;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('update-profile')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update user profile' })
+  @ApiConsumes('application/x-www-form-urlencoded')
+  @ApiResponse({
+    status: 200,
+    description: 'User profile updated successfully',
+  })
+  @ApiResponse({ status: 400, description: 'Invalid data' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async updateProfile(@Request() req, @Body() updateProfileDto: UpdateUserDto) {
+    const userId = req.user.id;
+    return this.usersService.update(userId, updateProfileDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('update-password')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update user password' })
+  @ApiConsumes('application/x-www-form-urlencoded')
+  @ApiResponse({
+    status: 200,
+    description: 'User password updated successfully',
+  })
+  @ApiResponse({ status: 400, description: 'Invalid data' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async updatePassword(
+    @Request() req,
+    @Body() updateUserPasswordDto: UpdateUserPasswordDto,
+  ) {
+    const userId = req.user.id;
+    const { password, confirmPassword } = updateUserPasswordDto;
+    if (password !== confirmPassword) {
+      throw new Error('Passwords do not match');
+    }
+    if (password.length < 8 || password.length > 20) {
+      throw new Error('Password must be between 8 and 20 characters');
+    }
+    return this.usersService.updatePassword(userId, password);
   }
 }

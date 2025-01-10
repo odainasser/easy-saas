@@ -1,9 +1,14 @@
 import { Controller, UseGuards } from '@nestjs/common';
 import { Body, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { ApiTags, ApiConsumes, ApiBearerAuth } from '@nestjs/swagger';
-import { CreateUserDto } from './dtos/create-user.dto';
-import { UpdateUserDto } from './dtos/update-user.dto';
-import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
+import {
+  ApiTags,
+  ApiConsumes,
+  ApiBearerAuth,
+  ApiOperation,
+} from '@nestjs/swagger';
+import { CreateUserDto } from '../../../shared/dtos/create-user.dto';
+import { UpdateUserDto } from '../../../shared/dtos/update-user.dto';
+import { UpdateUserPasswordDto } from '../../../shared/dtos/update-user-password.dto';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
@@ -16,28 +21,33 @@ export class UsersController {
 
   @Post()
   @ApiConsumes('application/x-www-form-urlencoded')
+  @ApiOperation({ summary: 'Create a new user' })
   async create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get all users' })
   async findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get a user by ID' })
   async findOne(@Param('id') id: string) {
     return this.usersService.findOneByID(id);
   }
 
   @Put(':id')
   @ApiConsumes('application/x-www-form-urlencoded')
+  @ApiOperation({ summary: 'Update a user by ID' })
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
 
   @Put(':id/password')
   @ApiConsumes('application/x-www-form-urlencoded')
+  @ApiOperation({ summary: 'Update a user password by ID' })
   async updatePassword(
     @Param('id') id: string,
     @Body() updateUserPasswordDto: UpdateUserPasswordDto,
@@ -53,6 +63,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete a user by ID' })
   async remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
