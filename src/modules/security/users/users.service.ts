@@ -24,7 +24,11 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    const users = await this.userRepository.find();
+    return users.map((user) => {
+      const { password, ...result } = user;
+      return { ...result, password: null } as User;
+    });
   }
 
   async findOneByID(id: string): Promise<User> {
@@ -34,7 +38,8 @@ export class UsersService {
     if (!user) {
       throw new Error(`User with id ${id} not found`);
     }
-    return user;
+    const { password, ...result } = user;
+    return { ...result, password: null } as User;
   }
 
   async findOneByEmail(email: string): Promise<User> {
@@ -49,7 +54,9 @@ export class UsersService {
       throw new Error(`User with id ${id} not found`);
     }
     Object.assign(user, updateUserDto);
-    return this.userRepository.save(user);
+    const updatedUser = await this.userRepository.save(user);
+    const { password, ...result } = updatedUser;
+    return { ...result, password: null } as User;
   }
 
   async remove(id: string): Promise<void> {
