@@ -14,20 +14,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    if (payload.type === 'user') {
-      // const user = await this.usersService.findOne(payload.sub);
-      // if (!user) {
-      //   throw new Error('Unauthorized');
-      // }
-      // return { ...user, type: 'user' };
-    } else if (payload.type === 'tenant') {
-      // const tenant = await this.tenantService.findOne(payload.sub);
-      // if (!tenant) {
-      //   throw new Error('Unauthorized');
-      // }
-      // return { ...tenant, type: 'tenant' };
-    } else {
+    const user = await this.usersService.findOneByID(payload.sub);
+    if (!user) {
       throw new Error('Unauthorized');
     }
+    return { ...user };
   }
 }

@@ -13,43 +13,17 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    // await super.canActivate(context);
+    await super.canActivate(context);
 
-    // const request = context.switchToHttp().getRequest();
-    // const user = request.user;
+    const request = context.switchToHttp().getRequest();
+    const user = request.user;
 
-    // const userRole = await this.usersService.findUserRoleById(user.id);
+    const dbRole = await this.usersService.findOneByEmail(user.email);
 
-    // if (!userRole) {
-    //   throw new ForbiddenException('User role not found');
-    // }
-
-    // const permissions = userRole.permissions;
-    // const requestPath = request.path;
-
-    // const hasPermission = this.checkPermissions(permissions, requestPath);
-
-    // if (!hasPermission) {
-    //   throw new ForbiddenException(
-    //     'You do not have permission to access this resource',
-    //   );
-    // }
-
-    return true;
-  }
-
-  private checkPermissions(
-    permissions: Record<string, boolean>,
-    requestPath: string,
-  ): boolean {
-    if (requestPath.startsWith('/auth')) {
-      return true;
+    if (!dbRole) {
+      throw new ForbiddenException('User not found');
     }
 
-    return Object.entries(permissions)
-      .map(([permission, allowed]) => {
-        return allowed && requestPath.startsWith(permission);
-      })
-      .some((hasPermission) => hasPermission);
+    return true;
   }
 }

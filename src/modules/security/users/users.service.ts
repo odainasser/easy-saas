@@ -20,6 +20,16 @@ export class UsersService {
     return this.userRepository.find();
   }
 
+  async findOneByID(id: string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { id: Number(id) },
+    });
+    if (!user) {
+      throw new Error(`User with id ${id} not found`);
+    }
+    return user;
+  }
+
   async findOneByEmail(email: string): Promise<User> {
     return this.userRepository.findOne({ where: { email } });
   }
