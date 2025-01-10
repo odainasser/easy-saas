@@ -3,6 +3,7 @@ import { Body, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags, ApiConsumes, ApiBearerAuth } from '@nestjs/swagger';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
@@ -33,6 +34,19 @@ export class UsersController {
   @ApiConsumes('application/x-www-form-urlencoded')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
+  }
+
+  @Put(':id/password')
+  @ApiConsumes('application/x-www-form-urlencoded')
+  async updatePassword(
+    @Param('id') id: string,
+    @Body() updateUserPasswordDto: UpdateUserPasswordDto,
+  ) {
+    const { password, confirmPassword } = updateUserPasswordDto;
+    if (password !== confirmPassword) {
+      throw new Error('Passwords do not match');
+    }
+    return this.usersService.updatePassword(id, password);
   }
 
   @Delete(':id')

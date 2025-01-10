@@ -59,6 +59,20 @@ export class UsersService {
     return { ...result, password: null } as User;
   }
 
+  async updatePassword(id: string, newPassword: string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { id: id },
+    });
+    if (!user) {
+      throw new Error(`User with id ${id} not found`);
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    const updatedUser = await this.userRepository.save(user);
+    const { password, ...result } = updatedUser;
+    return { ...result, password: null } as User;
+  }
+
   async remove(id: string): Promise<void> {
     await this.userRepository.delete(id);
   }
