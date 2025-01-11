@@ -7,6 +7,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/security/users/users.module';
 import { AuthModule } from './modules/security/auth/auth.module';
+import { Role } from './shared/entities/role.entity';
+import { RolesModule } from './modules/security/roles/roles.module';
 
 dotenv.config();
 
@@ -30,8 +32,9 @@ dotenv.config();
     //   auth_pass: process.env.REDIS_PASSWORD,
     //   ttl: parseInt(process.env.CACHE_TTL, 10) || 3600,
     // }),
-    UsersModule,
     AuthModule,
+    UsersModule,
+    RolesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
