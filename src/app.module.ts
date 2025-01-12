@@ -7,7 +7,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/security/users/users.module';
 import { AuthModule } from './modules/security/auth/auth.module';
-import { Role } from './shared/entities/role.entity';
 import { RolesModule } from './modules/security/roles/roles.module';
 
 dotenv.config();

@@ -53,7 +53,6 @@ export class CreateRolesTable20231010120000 implements MigrationInterface {
     await queryRunner.manager.getRepository('roles').save({
       name: 'Admin',
       description: 'Administrator role with full permissions',
-      permissions: ['*'],
     });
   }
 
