@@ -26,7 +26,6 @@ export class CreateRolesTable20231010120000 implements MigrationInterface {
           {
             name: 'permissions',
             type: 'text',
-            isArray: true,
             isNullable: true,
           },
           {

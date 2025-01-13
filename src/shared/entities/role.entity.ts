@@ -19,8 +19,8 @@ export class Role extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @Column({ type: 'simple-array', nullable: true })
-  permissions: string[];
+  @Column({ type: 'text', nullable: true })
+  permissions: string;
 
   @CreateDateColumn()
   createdAt: Date;
