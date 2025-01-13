@@ -18,6 +18,7 @@ import { RolesService } from './roles.service';
 import { Role } from '../../../shared/entities/role.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateRoleDto } from '../../../shared/dtos/roles/create-role.dto';
+import { UpdateRoleDto } from '../../../shared/dtos/roles/update-role.dto';
 
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
@@ -48,8 +49,11 @@ export class RolesController {
   @Put(':id')
   @ApiConsumes('application/x-www-form-urlencoded')
   @ApiOperation({ summary: 'Update a role by ID' })
-  update(@Param('id') id: string, @Body() role: Role): Promise<Role> {
-    return this.rolesService.update(id, role);
+  update(
+    @Param('id') id: string,
+    @Body() updateRoleDto: UpdateRoleDto,
+  ): Promise<Role> {
+    return this.rolesService.update(id, updateRoleDto);
   }
 
   @Delete(':id')
