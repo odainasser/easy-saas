@@ -10,8 +10,8 @@ import {
 import { AuthService } from './auth.service';
 import { LoginDto } from '../../../shared/dtos/login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { UpdateUserDto } from '../../../shared/dtos/update-user.dto';
-import { UpdateUserPasswordDto } from '../../../shared/dtos/update-user-password.dto';
+import { UpdateUserDto } from '../../../shared/dtos/users/update-user.dto';
+import { UpdateUserPasswordDto } from '../../../shared/dtos/users/update-user-password.dto';
 
 import {
   ApiTags,

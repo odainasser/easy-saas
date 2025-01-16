@@ -1,29 +1,26 @@
 import {
   Entity,
-  BaseEntity,
-  Column,
   PrimaryGeneratedColumn,
+  Column,
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  BaseEntity,
 } from 'typeorm';
 
-@Entity('users')
-export class User extends BaseEntity {
+@Entity('roles')
+export class Role extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar' })
-  firstName: string;
+  @Column({ unique: true })
+  name: string;
 
-  @Column({ type: 'varchar' })
-  lastName: string;
+  @Column({ type: 'text', nullable: true })
+  description: string;
 
-  @Column({ type: 'varchar', unique: true })
-  email: string;
-
-  @Column({ type: 'varchar' })
-  password: string;
+  @Column({ type: 'text', nullable: true })
+  permissions: string;
 
   @CreateDateColumn()
   createdAt: Date;
