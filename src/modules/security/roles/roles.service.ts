@@ -12,27 +12,47 @@ export class RolesService {
     private readonly roleRepository: Repository<Role>,
   ) {}
 
-  findAll(): Promise<Role[]> {
-    return this.roleRepository.find();
+  async findAll(): Promise<Role[]> {
+    try {
+      return await this.roleRepository.find();
+    } catch (error) {
+      throw new Error(`Failed to find roles: ${error.message}`);
+    }
   }
 
-  findOneById(id: string): Promise<Role> {
-    return this.roleRepository.findOne({
-      where: { id },
-      relations: ['users'],
-    });
+  async findOneById(id: string): Promise<Role> {
+    try {
+      return await this.roleRepository.findOne({
+        where: { id },
+        relations: ['users'],
+      });
+    } catch (error) {
+      throw new Error(`Failed to find role by ID: ${error.message}`);
+    }
   }
 
-  create(createRoleDto: CreateRoleDto): Promise<Role> {
-    return this.roleRepository.save(createRoleDto);
+  async create(createRoleDto: CreateRoleDto): Promise<Role> {
+    try {
+      return await this.roleRepository.save(createRoleDto);
+    } catch (error) {
+      throw new Error(`Failed to create role: ${error.message}`);
+    }
   }
 
   async update(id: string, updateRoleDto: UpdateRoleDto): Promise<Role> {
-    await this.roleRepository.update(id, updateRoleDto);
-    return this.roleRepository.findOne({ where: { id } });
+    try {
+      await this.roleRepository.update(id, updateRoleDto);
+      return await this.roleRepository.findOne({ where: { id } });
+    } catch (error) {
+      throw new Error(`Failed to update role: ${error.message}`);
+    }
   }
 
   async remove(id: string): Promise<void> {
-    await this.roleRepository.delete(id);
+    try {
+      await this.roleRepository.delete(id);
+    } catch (error) {
+      throw new Error(`Failed to remove role: ${error.message}`);
+    }
   }
 }

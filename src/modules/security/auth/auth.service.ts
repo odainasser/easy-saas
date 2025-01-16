@@ -12,24 +12,32 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.usersService.findOneByEmail(email);
-    if (user && (await bcrypt.compare(password, user.password))) {
-      const { password, ...result } = user;
-      return result;
+    try {
+      const user = await this.usersService.findOneByEmail(email);
+      if (user && (await bcrypt.compare(password, user.password))) {
+        const { password, ...result } = user;
+        return result;
+      }
+      return null;
+    } catch (error) {
+      throw new Error(`Failed to validate user: ${error.message}`);
     }
-    return null;
   }
 
   async login(loginDto: LoginDto): Promise<any> {
-    const { email, password } = loginDto;
-    const user = await this.validateUser(email, password);
-    if (!user) {
-      throw new Error('Invalid credentials');
-    }
+    try {
+      const { email, password } = loginDto;
+      const user = await this.validateUser(email, password);
+      if (!user) {
+        throw new Error('Invalid credentials');
+      }
 
-    const payload = { username: user.email, sub: user.id, type: 'user' };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+      const payload = { username: user.email, sub: user.id, type: 'user' };
+      return {
+        access_token: this.jwtService.sign(payload),
+      };
+    } catch (error) {
+      throw new Error(`Failed to login: ${error.message}`);
+    }
   }
 }
