@@ -43,7 +43,7 @@ export class RolesController {
   @Get(':id')
   @ApiOperation({ summary: 'Get a role by ID' })
   findOne(@Param('id') id: string): Promise<Role> {
-    return this.rolesService.findOne(id);
+    return this.rolesService.findOneById(id);
   }
 
   @Put(':id')

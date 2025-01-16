@@ -1,32 +1,42 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
-export class CreateRolesTable20231010120000 implements MigrationInterface {
+export class CreateUsersTable20231010120000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'roles',
+        name: 'users',
         columns: [
           {
             name: 'id',
             type: 'uuid',
             isPrimary: true,
+            isGenerated: true,
             generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+            default: `uuid_generate_v4()`,
           },
           {
-            name: 'name',
+            name: 'firstName',
+            type: 'varchar',
+          },
+          {
+            name: 'lastName',
+            type: 'varchar',
+          },
+          {
+            name: 'email',
             type: 'varchar',
             isUnique: true,
           },
           {
-            name: 'description',
-            type: 'text',
-            isNullable: true,
+            name: 'password',
+            type: 'varchar',
           },
           {
-            name: 'permissions',
-            type: 'text',
+            name: 'roleId',
+            type: 'uuid',
             isNullable: true,
+            default: null,
           },
           {
             name: 'createdAt',
@@ -49,13 +59,17 @@ export class CreateRolesTable20231010120000 implements MigrationInterface {
     );
 
     // Seed data
-    await queryRunner.manager.getRepository('roles').save({
-      name: 'Admin',
-      description: 'Administrator role with full permissions',
+    const userPassword = await bcrypt.hash('userpassword', 10);
+    await queryRunner.manager.getRepository('users').save({
+      firstName: 'User',
+      lastName: 'User',
+      email: 'user@example.com',
+      password: userPassword,
     });
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('roles');
+    const table = await queryRunner.getTable('users');
+    await queryRunner.dropTable('users');
   }
 }
