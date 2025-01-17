@@ -42,6 +42,12 @@ export class CreateTenantsTable1737104587712 implements MigrationInterface {
             default: null,
           },
           {
+            name: 'website',
+            type: 'varchar',
+            isNullable: true,
+            default: null,
+          },
+          {
             name: 'status',
             type: 'enum',
             enum: ['active', 'inactive'],

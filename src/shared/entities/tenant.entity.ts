@@ -29,6 +29,9 @@ export class Tenant extends BaseEntity {
   @Column({ type: 'varchar', nullable: true, default: null })
   address: string;
 
+  @Column({ type: 'varchar', nullable: true, default: null })
+  website: string;
+
   @Column({
     type: 'enum',
     enum: TenantStatus,

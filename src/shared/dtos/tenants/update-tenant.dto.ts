@@ -56,4 +56,13 @@ export class UpdateTenantDto {
   @IsEnum(TenantStatus)
   @IsNotEmpty()
   status: TenantStatus;
+
+  @ApiProperty({
+    description: 'Website URL of the tenant organization',
+    example: 'https://www.propertymanagement.com',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  website?: string;
 }

@@ -10,50 +10,78 @@ import { TenantStatus } from '../../../common/enums/tenant-status.enum';
 
 export class CreateTenantDto {
   @ApiProperty({
-    description: 'The name of the tenant',
-    example: 'Example Company',
+    description: 'Legal or business name of the tenant organization',
+    example: 'Property Management LLC',
+    required: true,
   })
   @IsString()
   @IsNotEmpty()
   name: string;
 
   @ApiProperty({
-    description: 'The email of the tenant',
-    example: 'john.doe@example.com',
+    description: 'Primary contact email address for the tenant organization',
+    example: 'contact@propertymanagement.com',
+    required: true,
   })
   @IsEmail()
   @IsNotEmpty()
   email: string;
 
   @ApiProperty({
-    description: 'The phone number of the tenant',
-    example: '+1234567890',
+    description: 'Primary contact phone number (including country code)',
+    example: '+971501234567',
+    required: true,
   })
   @IsString()
   @IsNotEmpty()
   phoneNumber: string;
 
   @ApiProperty({
-    description: 'The domain of the tenant',
-    example: 'example-company',
+    description:
+      'Unique subdomain identifier for the tenant (lowercase, no spaces)',
+    example: 'property-management',
+    required: true,
   })
   @IsString()
   @IsNotEmpty()
   domain: string;
 
   @ApiProperty({
-    description: 'The address of the tenant',
-    example: '123 Main St, Anytown, USA',
+    description: 'Physical address of the tenant organization',
+    example: 'Dubai Marina, Tower A, Floor 12, Office 1204',
+    required: false,
   })
   @IsString()
   @IsOptional()
   address?: string;
 
   @ApiProperty({
-    description: 'The status of the tenant',
-    example: 'active',
+    description: 'Current operational status of the tenant',
+    enum: TenantStatus,
+    enumName: 'TenantStatus',
+    example: TenantStatus.Active,
+    examples: {
+      active: {
+        value: TenantStatus.Active,
+        description: 'Tenant is currently active and operational',
+      },
+      inactive: {
+        value: TenantStatus.Inactive,
+        description: 'Tenant is temporarily or permanently disabled',
+      },
+    },
+    required: true,
   })
   @IsEnum(TenantStatus)
   @IsNotEmpty()
   status: TenantStatus;
+
+  @ApiProperty({
+    description: 'Website URL of the tenant organization',
+    example: 'https://www.propertymanagement.com',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  website?: string;
 }
