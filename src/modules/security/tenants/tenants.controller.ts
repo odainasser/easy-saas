@@ -52,6 +52,25 @@ export class TenantsController {
     return this.tenantsService.update(id, updateTenantDto);
   }
 
+  @Put(':tenantId/users/:userId')
+  @ApiConsumes('application/x-www-form-urlencoded')
+  @ApiOperation({ summary: 'Add a user to a tenant' })
+  addUserToTenant(
+    @Param('tenantId') tenantId: string,
+    @Param('userId') userId: string,
+  ) {
+    return this.tenantsService.addUserToTenant(tenantId, userId);
+  }
+
+  @Delete(':tenantId/users/:userId')
+  @ApiOperation({ summary: 'Remove a user from a tenant' })
+  removeUserFromTenant(
+    @Param('tenantId') tenantId: string,
+    @Param('userId') userId: string,
+  ) {
+    return this.tenantsService.removeUserFromTenant(tenantId, userId);
+  }
+
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a tenant by ID' })
   remove(@Param('id') id: string) {

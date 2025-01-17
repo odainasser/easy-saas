@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { Tenant } from '../../../shared/entities/tenant.entity';
 import { CreateTenantDto } from '../../../shared/dtos/tenants/create-tenant.dto';
 import { UpdateTenantDto } from '../../../shared/dtos/tenants/update-tenant.dto';
+import { User } from '../../../shared/entities/user.entity';
 
 @Injectable()
 export class TenantsService {
@@ -93,6 +94,49 @@ export class TenantsService {
       }
       throw new InternalServerErrorException(
         'Failed to delete tenant',
+        error.message,
+      );
+    }
+  }
+
+  async addUserToTenant(tenantId: string, userId: string): Promise<Tenant> {
+    try {
+      const tenant = await this.tenantsRepository.findOne({
+        where: { id: tenantId },
+        relations: ['users'],
+      });
+      if (!tenant) {
+        throw new NotFoundException(`Tenant with ID ${tenantId} not found`);
+      }
+      const user = new User();
+      user.id = userId;
+      tenant.users.push(user);
+      return await this.tenantsRepository.save(tenant);
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Failed to add user to tenant',
+        error.message,
+      );
+    }
+  }
+
+  async removeUserFromTenant(
+    tenantId: string,
+    userId: string,
+  ): Promise<Tenant> {
+    try {
+      const tenant = await this.tenantsRepository.findOne({
+        where: { id: tenantId },
+        relations: ['users'],
+      });
+      if (!tenant) {
+        throw new NotFoundException(`Tenant with ID ${tenantId} not found`);
+      }
+      tenant.users = tenant.users.filter((user) => user.id !== userId);
+      return await this.tenantsRepository.save(tenant);
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Failed to remove user from tenant',
         error.message,
       );
     }
