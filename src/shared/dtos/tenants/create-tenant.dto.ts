@@ -34,7 +34,7 @@ export class CreateTenantDto {
   })
   @IsString()
   @IsNotEmpty()
-  phoneNumber: string;
+  phone: string;
 
   @ApiProperty({
     description:

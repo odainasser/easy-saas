@@ -26,12 +26,13 @@ export class UpdateTenantDto {
   email: string;
 
   @ApiProperty({
-    description: 'The phone number of the tenant',
-    example: '+1234567890',
+    description: 'Primary contact phone number (including country code)',
+    example: '+971501234567',
+    required: true,
   })
   @IsString()
   @IsNotEmpty()
-  phoneNumber: string;
+  phone: string;
 
   @ApiProperty({
     description: 'The domain of the tenant',
@@ -50,8 +51,21 @@ export class UpdateTenantDto {
   address?: string;
 
   @ApiProperty({
-    description: 'The status of the tenant',
-    example: 'active',
+    description: 'Current operational status of the tenant',
+    enum: TenantStatus,
+    enumName: 'TenantStatus',
+    example: TenantStatus.Active,
+    examples: {
+      active: {
+        value: TenantStatus.Active,
+        description: 'Tenant is currently active and operational',
+      },
+      inactive: {
+        value: TenantStatus.Inactive,
+        description: 'Tenant is temporarily or permanently disabled',
+      },
+    },
+    required: true,
   })
   @IsEnum(TenantStatus)
   @IsNotEmpty()
