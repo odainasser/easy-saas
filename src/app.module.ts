@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './modules/security/users/users.module';
 import { AuthModule } from './modules/security/auth/auth.module';
 import { RolesModule } from './modules/security/roles/roles.module';
+import { TenantsModule } from './modules/security/tenants/tenants.module';
 
 dotenv.config();
 
@@ -32,8 +33,9 @@ dotenv.config();
     //   ttl: parseInt(process.env.CACHE_TTL, 10) || 3600,
     // }),
     AuthModule,
-    UsersModule,
+    TenantsModule,
     RolesModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
