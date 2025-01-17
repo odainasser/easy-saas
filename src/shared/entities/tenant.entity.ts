@@ -7,7 +7,10 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   BaseEntity,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity('tenants')
 export class Tenant extends BaseEntity {
@@ -39,6 +42,20 @@ export class Tenant extends BaseEntity {
     nullable: false,
   })
   status: TenantStatus;
+
+  @ManyToMany(() => User, (user) => user.tenants)
+  @JoinTable({
+    name: 'tenant_users',
+    joinColumn: {
+      name: 'tenant_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+  })
+  users: User[];
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

@@ -7,8 +7,10 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   ManyToOne,
+  ManyToMany,
 } from 'typeorm';
 import { Role } from './role.entity';
+import { Tenant } from './tenant.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -29,6 +31,9 @@ export class User extends BaseEntity {
 
   @ManyToOne(() => Role, (role) => role.users)
   role?: Role;
+
+  @ManyToMany(() => Tenant, (tenant) => tenant.users)
+  tenants: Tenant[];
 
   @CreateDateColumn()
   createdAt: Date;
