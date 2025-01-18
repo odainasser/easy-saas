@@ -99,7 +99,11 @@ export class TenantsService {
     }
   }
 
-  async addUserToTenant(tenantId: string, userId: string): Promise<Tenant> {
+  async addUserToTenant(
+    tenantId: string,
+    userId: string,
+    userType: string,
+  ): Promise<Tenant> {
     try {
       const tenant = await this.tenantsRepository.findOne({
         where: { id: tenantId },
@@ -112,7 +116,10 @@ export class TenantsService {
       if (!user) {
         user = new User();
         user.id = userId;
+        user.type = userType;
         tenant.users.push(user);
+      } else {
+        user.type = userType;
       }
       return await this.tenantsRepository.save(tenant);
     } catch (error) {

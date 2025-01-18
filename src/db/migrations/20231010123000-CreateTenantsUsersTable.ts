@@ -1,10 +1,22 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateTenantUsersTable1737104587713 implements MigrationInterface {
+export class CreateTenantsUsersTable20231010123000
+  implements MigrationInterface
+{
   public async up(queryRunner: QueryRunner): Promise<void> {
+    const tenantsTableExists = await queryRunner.hasTable('tenants');
+    if (!tenantsTableExists) {
+      throw new Error('Table "tenants" does not exist');
+    }
+
+    const usersTableExists = await queryRunner.hasTable('users');
+    if (!usersTableExists) {
+      throw new Error('Table "users" does not exist');
+    }
+
     await queryRunner.createTable(
       new Table({
-        name: 'tenant_users',
+        name: 'tenants_users',
         columns: [
           {
             name: 'tenant_id',
@@ -44,6 +56,6 @@ export class CreateTenantUsersTable1737104587713 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('tenant_users');
+    await queryRunner.dropTable('tenants_users');
   }
 }

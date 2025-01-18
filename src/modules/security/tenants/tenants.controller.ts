@@ -18,6 +18,7 @@ import { TenantsService } from './tenants.service';
 import { CreateTenantDto } from '../../../shared/dtos/tenants/create-tenant.dto';
 import { UpdateTenantDto } from '../../../shared/dtos/tenants/update-tenant.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { UpdateTenantUserDto } from '../../../shared/dtos/tenants/update-tenant-user.dto';
 
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
@@ -58,8 +59,13 @@ export class TenantsController {
   addUserToTenant(
     @Param('tenantId') tenantId: string,
     @Param('userId') userId: string,
+    @Body() updateTenantUserDto: UpdateTenantUserDto,
   ) {
-    return this.tenantsService.addUserToTenant(tenantId, userId);
+    return this.tenantsService.addUserToTenant(
+      tenantId,
+      userId,
+      updateTenantUserDto.type,
+    );
   }
 
   @Delete(':tenantId/users/:userId')

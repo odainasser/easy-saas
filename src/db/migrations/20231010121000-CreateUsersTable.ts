@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
-export class CreateUsersTable20231010120000 implements MigrationInterface {
+export class CreateUsersTable20231010121000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
