@@ -45,7 +45,7 @@ export class Tenant extends BaseEntity {
 
   @ManyToMany(() => User, (user) => user.tenants)
   @JoinTable({
-    name: 'tenant_users',
+    name: 'tenants_users',
     joinColumn: {
       name: 'tenant_id',
       referencedColumnName: 'id',

@@ -18,6 +18,7 @@ import { TenantsService } from './tenants.service';
 import { CreateTenantDto } from '../../../shared/dtos/tenants/create-tenant.dto';
 import { UpdateTenantDto } from '../../../shared/dtos/tenants/update-tenant.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { UpdateTenantUserDto } from '../../../shared/dtos/tenants/update-tenant-user.dto';
 
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
@@ -50,6 +51,30 @@ export class TenantsController {
   @ApiConsumes('application/x-www-form-urlencoded')
   update(@Param('id') id: string, @Body() updateTenantDto: UpdateTenantDto) {
     return this.tenantsService.update(id, updateTenantDto);
+  }
+
+  @Put(':tenantId/users/:userId')
+  @ApiConsumes('application/x-www-form-urlencoded')
+  @ApiOperation({ summary: 'Add a user to a tenant' })
+  addUserToTenant(
+    @Param('tenantId') tenantId: string,
+    @Param('userId') userId: string,
+    @Body() updateTenantUserDto: UpdateTenantUserDto,
+  ) {
+    return this.tenantsService.addUserToTenant(
+      tenantId,
+      userId,
+      updateTenantUserDto.type,
+    );
+  }
+
+  @Delete(':tenantId/users/:userId')
+  @ApiOperation({ summary: 'Remove a user from a tenant' })
+  removeUserFromTenant(
+    @Param('tenantId') tenantId: string,
+    @Param('userId') userId: string,
+  ) {
+    return this.tenantsService.removeUserFromTenant(tenantId, userId);
   }
 
   @Delete(':id')
