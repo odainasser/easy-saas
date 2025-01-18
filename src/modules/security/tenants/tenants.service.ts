@@ -108,13 +108,16 @@ export class TenantsService {
       if (!tenant) {
         throw new NotFoundException(`Tenant with ID ${tenantId} not found`);
       }
-      const user = new User();
-      user.id = userId;
-      tenant.users.push(user);
+      let user = tenant.users.find((user) => user.id === userId);
+      if (!user) {
+        user = new User();
+        user.id = userId;
+        tenant.users.push(user);
+      }
       return await this.tenantsRepository.save(tenant);
     } catch (error) {
       throw new InternalServerErrorException(
-        'Failed to add user to tenant',
+        'Failed to add or update user in tenant',
         error.message,
       );
     }
