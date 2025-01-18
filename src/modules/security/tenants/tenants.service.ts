@@ -31,7 +31,7 @@ export class TenantsService {
 
   async findAll(): Promise<Tenant[]> {
     try {
-      return await this.tenantsRepository.find();
+      return await this.tenantsRepository.find({ relations: ['users'] });
     } catch (error) {
       throw new InternalServerErrorException(
         'Failed to retrieve tenants',
@@ -42,7 +42,10 @@ export class TenantsService {
 
   async findOne(id: string): Promise<Tenant> {
     try {
-      const tenant = await this.tenantsRepository.findOne({ where: { id } });
+      const tenant = await this.tenantsRepository.findOne({
+        where: { id },
+        relations: ['users'],
+      });
       if (!tenant) {
         throw new NotFoundException(`Tenant with ID ${id} not found`);
       }
