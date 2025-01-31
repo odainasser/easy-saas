@@ -1,24 +1,22 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreatePlansTable1737225857286 implements MigrationInterface {
+export class CreateRolesTable1738334625650 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'plans',
+        name: 'roles',
         columns: [
           {
             name: 'id',
             type: 'uuid',
             isPrimary: true,
-            isGenerated: true,
             generationStrategy: 'uuid',
-            default: `uuid_generate_v4()`,
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'name',
             type: 'varchar',
-            length: '255',
-            isNullable: false,
+            isUnique: true,
           },
           {
             name: 'description',
@@ -26,23 +24,19 @@ export class CreatePlansTable1737225857286 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: 'price',
-            type: 'decimal',
-            precision: 10,
-            scale: 2,
-            isNullable: false,
+            name: 'permissions',
+            type: 'text',
+            isNullable: true,
           },
           {
-            name: 'created_at',
+            name: 'createdAt',
             type: 'timestamp',
-            default: 'NOW()',
-            isNullable: false,
+            default: 'now()',
           },
           {
-            name: 'updated_at',
+            name: 'updatedAt',
             type: 'timestamp',
-            default: 'NOW()',
-            isNullable: false,
+            default: 'now()',
           },
           {
             name: 'deletedAt',
@@ -53,9 +47,15 @@ export class CreatePlansTable1737225857286 implements MigrationInterface {
       }),
       true,
     );
+
+    // Seed data
+    await queryRunner.manager.getRepository('roles').save({
+      name: 'Admin',
+      description: 'Administrator role with full permissions',
+    });
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('plans');
+    await queryRunner.dropTable('roles');
   }
 }

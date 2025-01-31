@@ -1,10 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateRolesTable20231010120000 implements MigrationInterface {
+export class CreateTenantsTable1738334690278 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
     await queryRunner.createTable(
       new Table({
-        name: 'roles',
+        name: 'tenants',
         columns: [
           {
             name: 'id',
@@ -16,17 +17,43 @@ export class CreateRolesTable20231010120000 implements MigrationInterface {
           {
             name: 'name',
             type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'domain',
+            type: 'varchar',
             isUnique: true,
+            isNullable: false,
           },
           {
-            name: 'description',
-            type: 'text',
-            isNullable: true,
+            name: 'email',
+            type: 'varchar',
+            isUnique: true,
+            isNullable: false,
           },
           {
-            name: 'permissions',
-            type: 'text',
+            name: 'phone',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'address',
+            type: 'varchar',
             isNullable: true,
+            default: null,
+          },
+          {
+            name: 'website',
+            type: 'varchar',
+            isNullable: true,
+            default: null,
+          },
+          {
+            name: 'status',
+            type: 'enum',
+            enum: ['active', 'inactive'],
+            isNullable: false,
+            default: "'active'",
           },
           {
             name: 'createdAt',
@@ -47,15 +74,9 @@ export class CreateRolesTable20231010120000 implements MigrationInterface {
       }),
       true,
     );
-
-    // Seed data
-    await queryRunner.manager.getRepository('roles').save({
-      name: 'Admin',
-      description: 'Administrator role with full permissions',
-    });
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('roles');
+    await queryRunner.dropTable('tenants');
   }
 }
