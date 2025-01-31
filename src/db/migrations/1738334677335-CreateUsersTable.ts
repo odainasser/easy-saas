@@ -1,4 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 export class CreateUsersTable1738334677335 implements MigrationInterface {
@@ -58,6 +63,16 @@ export class CreateUsersTable1738334677335 implements MigrationInterface {
       true,
     );
 
+    await queryRunner.createForeignKey(
+      'users',
+      new TableForeignKey({
+        columnNames: ['roleId'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'roles',
+        onDelete: 'SET NULL',
+      }),
+    );
+
     // Seed data
     const userPassword = await bcrypt.hash('userpassword', 10);
     await queryRunner.manager.getRepository('users').save({
@@ -69,7 +84,7 @@ export class CreateUsersTable1738334677335 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    const table = await queryRunner.getTable('users');
+    await queryRunner.dropForeignKey('users', 'FK_users_roleId');
     await queryRunner.dropTable('users');
   }
 }
