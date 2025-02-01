@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  UseGuards,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -9,6 +18,7 @@ import { PlansService } from './plans.service';
 import { Plan } from '../../../shared/entities/plan.entity';
 import { CreatePlanDto } from '../../../shared/dtos/plans/create-plan.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { UpdatePlanDto } from '../../../shared/dtos/plans/update-plan.dto';
 
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
@@ -34,5 +44,21 @@ export class PlansController {
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Plan> {
     return this.plansService.findOne(id);
+  }
+
+  @ApiOperation({ summary: 'Update a plan' })
+  @Put(':id')
+  @ApiConsumes('application/x-www-form-urlencoded')
+  update(
+    @Param('id') id: string,
+    @Body() updatePlanDto: UpdatePlanDto,
+  ): Promise<Plan> {
+    return this.plansService.update(id, updatePlanDto);
+  }
+
+  @ApiOperation({ summary: 'Delete a plan' })
+  @Delete(':id')
+  remove(@Param('id') id: string): Promise<void> {
+    return this.plansService.remove(id);
   }
 }

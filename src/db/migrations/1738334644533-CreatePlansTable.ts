@@ -38,13 +38,13 @@ export class CreatePlansTable1738334644533 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'created_at',
+            name: 'createdAt',
             type: 'timestamp',
             default: 'NOW()',
             isNullable: false,
           },
           {
-            name: 'updated_at',
+            name: 'updatedAt',
             type: 'timestamp',
             default: 'NOW()',
             isNullable: false,
