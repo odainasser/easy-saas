@@ -50,7 +50,7 @@ export class RolesService {
 
   async remove(id: string): Promise<void> {
     try {
-      await this.roleRepository.delete(id);
+      await this.roleRepository.softDelete(id);
     } catch (error) {
       throw new Error(`Failed to remove role: ${error.message}`);
     }
