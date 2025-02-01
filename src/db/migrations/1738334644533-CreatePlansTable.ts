@@ -34,7 +34,7 @@ export class CreatePlansTable1738334644533 implements MigrationInterface {
           },
           {
             name: 'limits',
-            type: 'json',
+            type: 'jsonb',
             isNullable: false,
           },
           {

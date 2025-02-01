@@ -21,7 +21,7 @@ export class Plan {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
-  @Column({ type: 'json' })
+  @Column({ type: 'jsonb' })
   limits: any;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
