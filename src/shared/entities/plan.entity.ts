@@ -5,7 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  OneToOne,
 } from 'typeorm';
+import { Subscription } from './subscription.entity';
 
 @Entity('plans')
 export class Plan {
@@ -32,4 +34,7 @@ export class Plan {
 
   @DeleteDateColumn({ type: 'timestamp', nullable: true })
   deletedAt: Date;
+
+  @OneToOne(() => Subscription, (subscription) => subscription.plan)
+  subscription: Subscription;
 }

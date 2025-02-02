@@ -9,8 +9,11 @@ import {
   BaseEntity,
   ManyToMany,
   JoinTable,
+  OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { User } from './user.entity';
+import { Subscription } from './subscription.entity';
 
 @Entity('tenants')
 export class Tenant extends BaseEntity {
@@ -65,4 +68,7 @@ export class Tenant extends BaseEntity {
 
   @DeleteDateColumn({ type: 'timestamp', nullable: true })
   deletedAt: Date;
+
+  @OneToOne(() => Subscription, (subscription) => subscription.tenant)
+  subscription: Subscription;
 }
