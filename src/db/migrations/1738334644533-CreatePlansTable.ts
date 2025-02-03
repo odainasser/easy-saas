@@ -58,6 +58,15 @@ export class CreatePlansTable1738334644533 implements MigrationInterface {
       }),
       true,
     );
+
+    await queryRunner.manager.getRepository('plans').save({
+      name: 'Free',
+      description: 'Free plan',
+      price: 0,
+      limits: {
+        users: 3,
+      },
+    });
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
