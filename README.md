@@ -1,4 +1,4 @@
-# Easy SaaS
+# EeasySaaS
 
 ## Description
 
