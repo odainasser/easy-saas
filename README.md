@@ -61,7 +61,3 @@ easy-saas/
    ```sh
    npm start
    ```
-
-## License 
-
-Easy SaaS is an MIT-licensed open source project.
