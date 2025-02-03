@@ -9,12 +9,16 @@ import { Tenant } from '../../../shared/entities/tenant.entity';
 import { CreateTenantDto } from '../../../shared/dtos/tenants/create-tenant.dto';
 import { UpdateTenantDto } from '../../../shared/dtos/tenants/update-tenant.dto';
 import { User } from '../../../shared/entities/user.entity';
+import { Subscription } from '../../../shared/entities/subscription.entity';
+import { CreateSubscriptionDto } from '../../../shared/dtos/subscriptions/create-subscription.dto';
 
 @Injectable()
 export class TenantsService {
   constructor(
     @InjectRepository(Tenant)
     private readonly tenantsRepository: Repository<Tenant>,
+    @InjectRepository(Subscription)
+    private readonly subscriptionsRepository: Repository<Subscription>,
   ) {}
 
   async create(createTenantDto: CreateTenantDto): Promise<Tenant> {
@@ -150,6 +154,38 @@ export class TenantsService {
     } catch (error) {
       throw new InternalServerErrorException(
         'Failed to remove user from tenant',
+        error.message,
+      );
+    }
+  }
+
+  async upgradeSubscription(
+    tenantId: string,
+    createSubscriptionDto: CreateSubscriptionDto,
+  ): Promise<Subscription> {
+    try {
+      const tenant = await this.tenantsRepository.findOne({
+        where: { id: tenantId },
+      });
+      if (!tenant) {
+        throw new NotFoundException(`Tenant with ID ${tenantId} not found`);
+      }
+
+      const subscription = this.subscriptionsRepository.create({
+        ...createSubscriptionDto,
+        tenantId,
+      });
+
+      const savedSubscription =
+        await this.subscriptionsRepository.save(subscription);
+
+      tenant.subscription.id = savedSubscription.id;
+      await this.tenantsRepository.save(tenant);
+
+      return savedSubscription;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Failed to upgrade subscription',
         error.message,
       );
     }

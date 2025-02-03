@@ -31,11 +31,6 @@ export class CreateSubscriptionsTable1738509168016
             isNullable: false,
           },
           {
-            name: 'startDate',
-            type: 'timestamp',
-            isNullable: false,
-          },
-          {
             name: 'endDate',
             type: 'timestamp',
             isNullable: true,
@@ -43,7 +38,7 @@ export class CreateSubscriptionsTable1738509168016
           {
             name: 'status',
             type: 'enum',
-            enum: ['active', 'inactive', 'cancelled'],
+            enum: ['active', 'cancelled'],
             isNullable: false,
             default: "'active'",
           },
