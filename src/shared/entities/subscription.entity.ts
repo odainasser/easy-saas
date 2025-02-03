@@ -22,9 +22,6 @@ export class Subscription {
   @Column()
   planId: string;
 
-  @Column()
-  startDate: Date;
-
   @Column({ nullable: true })
   endDate: Date;
 

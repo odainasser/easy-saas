@@ -19,6 +19,7 @@ import { CreateTenantDto } from '../../../shared/dtos/tenants/create-tenant.dto'
 import { UpdateTenantDto } from '../../../shared/dtos/tenants/update-tenant.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateTenantUserDto } from '../../../shared/dtos/tenants/update-tenant-user.dto';
+import { CreateSubscriptionDto } from '../../../shared/dtos/subscriptions/create-subscription.dto';
 
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
@@ -81,5 +82,18 @@ export class TenantsController {
   @ApiOperation({ summary: 'Delete a tenant by ID' })
   remove(@Param('id') id: string) {
     return this.tenantsService.remove(id);
+  }
+
+  @Post(':tenantId/upgrade')
+  @ApiOperation({ summary: 'Upgrade subscription for a tenant' })
+  @ApiConsumes('application/x-www-form-urlencoded')
+  upgradeSubscription(
+    @Param('tenantId') tenantId: string,
+    @Body() createSubscriptionDto: CreateSubscriptionDto,
+  ) {
+    return this.tenantsService.upgradeSubscription(
+      tenantId,
+      createSubscriptionDto,
+    );
   }
 }
