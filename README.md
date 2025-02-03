@@ -2,7 +2,7 @@
 
 ## Description
 
-Easy SaaS is a starter repository for building SaaS applications using NestJS.
+EeasySaaS is a starter repository for building SaaS applications using NestJS.
 
 ## Project Structure
 
