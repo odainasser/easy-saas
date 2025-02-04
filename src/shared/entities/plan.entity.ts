@@ -5,10 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  OneToOne,
   OneToMany,
 } from 'typeorm';
 import { Subscription } from './subscription.entity';
+import { PlanType } from '../../common/enums/plan-type.enum';
 
 @Entity('plans')
 export class Plan {
@@ -23,6 +23,9 @@ export class Plan {
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
+
+  @Column({ type: 'enum', enum: PlanType })
+  type: PlanType;
 
   @Column({ type: 'jsonb' })
   limits: any;

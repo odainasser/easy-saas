@@ -6,6 +6,7 @@ import {
   IsJSON,
   IsNotEmpty,
 } from 'class-validator';
+import { PlanType } from '../../../common/enums/plan-type.enum';
 
 export class UpdatePlanDto {
   @ApiProperty({
@@ -31,6 +32,14 @@ export class UpdatePlanDto {
   @IsDecimal()
   @IsNotEmpty()
   price: number;
+
+  @ApiProperty({
+    description: 'Type of the plan (monthly/yearly)',
+    example: 'monthly',
+  })
+  @IsString()
+  @IsNotEmpty()
+  type: PlanType;
 
   @ApiProperty({
     description: 'Limits of the plan in JSON format',
