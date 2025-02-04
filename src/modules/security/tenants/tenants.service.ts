@@ -171,16 +171,17 @@ export class TenantsService {
         throw new NotFoundException(`Tenant with ID ${tenantId} not found`);
       }
 
+      const endDate = new Date();
+      endDate.setMonth(new Date().getMonth() + 1);
+
       const subscription = this.subscriptionsRepository.create({
         ...createSubscriptionDto,
         tenantId,
+        endDate,
       });
 
       const savedSubscription =
         await this.subscriptionsRepository.save(subscription);
-
-      tenant.subscription.id = savedSubscription.id;
-      await this.tenantsRepository.save(tenant);
 
       return savedSubscription;
     } catch (error) {

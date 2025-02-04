@@ -33,7 +33,7 @@ export class User extends BaseEntity {
   role?: Role;
 
   @ManyToMany(() => Tenant, (tenant) => tenant.users)
-  tenants: Tenant[];
+  tenants?: Tenant[];
 
   @CreateDateColumn()
   createdAt: Date;
