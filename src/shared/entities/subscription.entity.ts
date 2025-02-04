@@ -5,7 +5,6 @@ import {
   OneToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn,
   ManyToOne,
 } from 'typeorm';
 import { Tenant } from './tenant.entity';
@@ -38,9 +37,6 @@ export class Subscription {
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
 
   @OneToOne(() => Tenant, (tenant) => tenant.subscription, {
     onDelete: 'CASCADE',

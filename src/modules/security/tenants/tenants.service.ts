@@ -13,6 +13,7 @@ import { Subscription } from '../../../shared/entities/subscription.entity';
 import { CreateSubscriptionDto } from '../../../shared/dtos/subscriptions/create-subscription.dto';
 import { PlanType } from '../../../common/enums/plan-type.enum';
 import { Plan } from '../../../shared/entities/plan.entity';
+import { SubscriptionStatus } from '../../../common/enums/subscription-status.enum';
 
 @Injectable()
 export class TenantsService {
@@ -163,7 +164,7 @@ export class TenantsService {
     }
   }
 
-  async upgradeSubscription(
+  async createSubscription(
     tenantId: string,
     createSubscriptionDto: CreateSubscriptionDto,
   ): Promise<Subscription> {
@@ -181,6 +182,15 @@ export class TenantsService {
       if (!plan) {
         throw new NotFoundException(
           `Plan with ID ${createSubscriptionDto.planId} not found`,
+        );
+      }
+
+      const existingSubscription = await this.subscriptionsRepository.findOne({
+        where: { tenantId, status: SubscriptionStatus.ACTIVE },
+      });
+      if (existingSubscription) {
+        throw new InternalServerErrorException(
+          'Subscription already exists for this tenant',
         );
       }
 
@@ -205,7 +215,7 @@ export class TenantsService {
       return savedSubscription;
     } catch (error) {
       throw new InternalServerErrorException(
-        'Failed to upgrade subscription',
+        'Failed to create subscription',
         error.message,
       );
     }
