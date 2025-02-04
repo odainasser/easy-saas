@@ -43,7 +43,7 @@ easy-saas/
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repo/easy-saas.git
+   git clone git@github.com:odainasser/easy-saas.git
    cd easy-saas
    ```
 
