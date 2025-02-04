@@ -23,7 +23,7 @@ export class PlansService {
 
   async findAll(): Promise<Plan[]> {
     try {
-      return await this.plansRepository.find();
+      return await this.plansRepository.find({ relations: ['subscriptions'] });
     } catch (error) {
       throw new Error(`Error finding plans: ${error.message}`);
     }
@@ -31,7 +31,10 @@ export class PlansService {
 
   async findOne(id: string): Promise<Plan> {
     try {
-      return await this.plansRepository.findOne({ where: { id } });
+      return await this.plansRepository.findOne({
+        where: { id },
+        relations: ['subscriptions'],
+      });
     } catch (error) {
       throw new Error(`Error finding plan with id ${id}: ${error.message}`);
     }
