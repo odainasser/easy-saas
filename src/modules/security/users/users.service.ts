@@ -40,7 +40,9 @@ export class UsersService {
 
   async findAll(): Promise<User[]> {
     try {
-      const users = await this.userRepository.find({ relations: ['role'] });
+      const users = await this.userRepository.find({
+        relations: ['role', 'tenants'],
+      });
       return users.map((user) => {
         const { password, ...result } = user;
         return { ...result, password: null, role: user.role } as User;
@@ -54,6 +56,7 @@ export class UsersService {
     try {
       const user = await this.userRepository.findOne({
         where: { id: id },
+        relations: ['role', 'tenants'],
       });
       if (!user) {
         throw new Error(`User with id ${id} not found`);

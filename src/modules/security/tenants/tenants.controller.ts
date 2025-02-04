@@ -85,7 +85,7 @@ export class TenantsController {
   }
 
   @Post(':tenantId/upgrade')
-  @ApiOperation({ summary: 'Upgrade subscription for a tenant' })
+  @ApiOperation({ summary: 'Upgrade subscription plan for a tenant' })
   @ApiConsumes('application/x-www-form-urlencoded')
   upgradeSubscription(
     @Param('tenantId') tenantId: string,
