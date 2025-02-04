@@ -11,6 +11,8 @@ import { UpdateTenantDto } from '../../../shared/dtos/tenants/update-tenant.dto'
 import { User } from '../../../shared/entities/user.entity';
 import { Subscription } from '../../../shared/entities/subscription.entity';
 import { CreateSubscriptionDto } from '../../../shared/dtos/subscriptions/create-subscription.dto';
+import { PlanType } from '../../../common/enums/plan-type.enum';
+import { Plan } from '../../../shared/entities/plan.entity';
 
 @Injectable()
 export class TenantsService {
@@ -19,6 +21,8 @@ export class TenantsService {
     private readonly tenantsRepository: Repository<Tenant>,
     @InjectRepository(Subscription)
     private readonly subscriptionsRepository: Repository<Subscription>,
+    @InjectRepository(Plan)
+    private readonly plansRepository: Repository<Plan>,
   ) {}
 
   async create(createTenantDto: CreateTenantDto): Promise<Tenant> {
@@ -171,8 +175,23 @@ export class TenantsService {
         throw new NotFoundException(`Tenant with ID ${tenantId} not found`);
       }
 
+      const plan = await this.plansRepository.findOne({
+        where: { id: createSubscriptionDto.planId },
+      });
+      if (!plan) {
+        throw new NotFoundException(
+          `Plan with ID ${createSubscriptionDto.planId} not found`,
+        );
+      }
+
       const endDate = new Date();
-      endDate.setMonth(new Date().getMonth() + 1);
+      if (plan.type === PlanType.MONTHLY) {
+        endDate.setMonth(new Date().getMonth() + 1);
+      } else if (plan.type === PlanType.YEARLY) {
+        endDate.setFullYear(new Date().getFullYear() + 1);
+      } else {
+        throw new InternalServerErrorException('Invalid plan type');
+      }
 
       const subscription = this.subscriptionsRepository.create({
         ...createSubscriptionDto,

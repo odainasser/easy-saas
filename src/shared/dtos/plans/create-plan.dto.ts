@@ -6,6 +6,7 @@ import {
   IsJSON,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { PlanType } from '../../../common/enums/plan-type.enum';
 
 export class CreatePlanDto {
   @ApiProperty({
@@ -31,6 +32,14 @@ export class CreatePlanDto {
   @IsDecimal()
   @IsNotEmpty()
   price: number;
+
+  @ApiProperty({
+    description: 'Type of the plan (monthly/yearly)',
+    example: 'monthly',
+  })
+  @IsString()
+  @IsNotEmpty()
+  type: PlanType;
 
   @ApiProperty({
     description: 'Limits of the plan in JSON format',

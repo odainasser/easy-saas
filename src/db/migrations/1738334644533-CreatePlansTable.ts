@@ -33,6 +33,13 @@ export class CreatePlansTable1738334644533 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'type',
+            type: 'enum',
+            enum: ['monthly', 'yearly'],
+            isNullable: false,
+            default: "'monthly'",
+          },
+          {
             name: 'limits',
             type: 'jsonb',
             isNullable: false,
