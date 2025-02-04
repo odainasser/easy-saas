@@ -84,14 +84,14 @@ export class TenantsController {
     return this.tenantsService.remove(id);
   }
 
-  @Post(':tenantId/upgrade')
-  @ApiOperation({ summary: 'Upgrade subscription plan for a tenant' })
+  @Post(':tenantId/subscription')
+  @ApiOperation({ summary: 'Create subscription for a tenant' })
   @ApiConsumes('application/x-www-form-urlencoded')
   upgradeSubscription(
     @Param('tenantId') tenantId: string,
     @Body() createSubscriptionDto: CreateSubscriptionDto,
   ) {
-    return this.tenantsService.upgradeSubscription(
+    return this.tenantsService.createSubscription(
       tenantId,
       createSubscriptionDto,
     );

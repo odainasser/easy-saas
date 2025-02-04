@@ -52,11 +52,6 @@ export class CreateSubscriptionsTable1738509168016
             type: 'timestamp',
             default: 'now()',
           },
-          {
-            name: 'deletedAt',
-            type: 'timestamp',
-            isNullable: true,
-          },
         ],
       }),
       true,
