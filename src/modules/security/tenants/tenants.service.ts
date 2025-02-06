@@ -220,4 +220,45 @@ export class TenantsService {
       );
     }
   }
+
+  async updateSubscription(
+    tenantId: string,
+    planId: string,
+  ): Promise<Subscription> {
+    try {
+      const subscription = await this.subscriptionsRepository.findOne({
+        where: { tenantId, status: SubscriptionStatus.ACTIVE },
+      });
+      if (!subscription) {
+        throw new NotFoundException(
+          `Active subscription for tenant with ID ${tenantId} not found`,
+        );
+      }
+
+      const plan = await this.plansRepository.findOne({
+        where: { id: planId },
+      });
+      if (!plan) {
+        throw new NotFoundException(`Plan with ID ${planId} not found`);
+      }
+
+      subscription.planId = planId;
+
+      const endDate = new Date();
+      if (plan.type === PlanType.MONTHLY) {
+        endDate.setMonth(new Date().getMonth() + 1);
+      } else if (plan.type === PlanType.YEARLY) {
+        endDate.setFullYear(new Date().getFullYear() + 1);
+      } else {
+        throw new InternalServerErrorException('Invalid plan type');
+      }
+
+      return this.subscriptionsRepository.save(subscription);
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Failed to update subscription',
+        error.message,
+      );
+    }
+  }
 }

@@ -20,6 +20,7 @@ import { UpdateTenantDto } from '../../../shared/dtos/tenants/update-tenant.dto'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateTenantUserDto } from '../../../shared/dtos/tenants/update-tenant-user.dto';
 import { CreateSubscriptionDto } from '../../../shared/dtos/subscriptions/create-subscription.dto';
+import { UpdateSubscriptionDto } from '../../../shared/dtos/subscriptions/update-subscription.dto';
 
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
@@ -94,6 +95,19 @@ export class TenantsController {
     return this.tenantsService.createSubscription(
       tenantId,
       createSubscriptionDto,
+    );
+  }
+
+  @Put(':tenantId/subscription')
+  @ApiOperation({ summary: 'Update subscription plan for a tenant' })
+  @ApiConsumes('application/x-www-form-urlencoded')
+  updateSubscription(
+    @Param('tenantId') tenantId: string,
+    @Body() updateSubscriptionDto: UpdateSubscriptionDto,
+  ) {
+    return this.tenantsService.updateSubscription(
+      tenantId,
+      updateSubscriptionDto.planId,
     );
   }
 }
