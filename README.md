@@ -1,12 +1,38 @@
 ## Table of Contents
+
 - [Description](#description)
+- [Features](#features)
+- [Tools](#tools)
 - [Project Structure](#project-structure)
 - [Setup Instructions](#setup-instructions)
 
 ## Description
+
 EasySaaS is a starter repository for building SaaS applications using NestJS, with a focus on identity and security. It can also be used as an identity microservice in enterprise solutions.
 
+## Features
+
+- User authentication and authorization
+- Role-based access control
+- Secure password storage
+- Multi-tenancy support
+- Plans and subscription management
+
+## Tools
+
+- NestJS
+- TypeORM
+- Passport.js
+- JWT
+- bcrypt
+- Jest
+- Swagger
+- PostgreSQL
+- Redis
+
 ## Project Structure
+
+The project structure is organized as follows:
 
 ```
 easy-saas/
