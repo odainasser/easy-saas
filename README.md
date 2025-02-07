@@ -1,4 +1,3 @@
-# EeasySaaS
 ## Table of Contents
 - [Description](#description)
 - [Project Structure](#project-structure)
