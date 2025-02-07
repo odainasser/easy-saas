@@ -1,8 +1,8 @@
 # EeasySaaS
 
 ## Description
+EasySaaS is a starter repository for building SaaS applications using NestJS, with a focus on identity and security. It can also be used as an identity microservice in enterprise solutions.
 
-EeasySaaS is a starter repository for building SaaS applications using NestJS.
 
 ## Project Structure
 
@@ -59,5 +59,5 @@ easy-saas/
 
 4. Start the application:
    ```sh
-   npm start
+   npm run start
    ```
